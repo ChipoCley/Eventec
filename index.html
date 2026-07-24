@@ -78,8 +78,8 @@
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  #topnav .logo{font-family:'Archivo',sans-serif; font-weight:900; font-size:19px; letter-spacing:.02em;}
-  #topnav .logo span{color:var(--brass);}
+  #topnav .logo{display:flex; align-items:center; min-height:38px;}
+  #topnav .logo img{display:block; max-height:38px; width:auto;}
   #topnav .navlinks{display:flex; gap:26px; align-items:center;}
   #topnav .navlinks a{font-size:13px; text-decoration:none; font-weight:500; letter-spacing:.01em;}
   #privateBtn{
@@ -288,7 +288,7 @@
 
 <!-- ============ TOP NAV ============ -->
 <nav id="topnav">
-  <div class="logo">Torre<span>·</span>A</div>
+  <div class="logo"><img src="Images/logo.png" alt="Logo Torre A"></div>
   <div class="navlinks">
     <a href="#concepto">Proyecto</a>
     <a href="#departamentos">Departamentos</a>
