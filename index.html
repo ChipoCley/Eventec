@@ -718,18 +718,36 @@
   calcSim();
 
   // gate + dashboard
-  function openGate(){ document.getElementById('gate').classList.add('show'); }
-  function closeGate(){ document.getElementById('gate').classList.remove('show'); }
+  function openGate(){
+    const gate = document.getElementById('gate');
+    gate.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function closeGate(){
+    const gate = document.getElementById('gate');
+    gate.classList.remove('show');
+    if (!document.getElementById('dash').classList.contains('show')) {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+  }
+
   function enterDash(){
     closeGate();
-    document.getElementById('dash').classList.add('show');
-    document.body.style.overflow='hidden';
-    window.scrollTo(0,0);
-    document.getElementById('dash').scrollIntoView();
+    const dash = document.getElementById('dash');
+    dash.classList.add('show');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    dash.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
   function exitDash(){
     document.getElementById('dash').classList.remove('show');
-    document.body.style.overflow='auto';
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
 </script>
 
