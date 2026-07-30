@@ -568,10 +568,11 @@
     <div class="eyebrow">Acceso restringido</div>
     <h3>Asesores e inversionistas</h3>
     <p>Esta sección concentra el avance real de obra, cronograma, modelo BIM, planos y documentos legales, proveedores y el simulador financiero completo.</p>
-    <input type="text" placeholder="Usuario">
-    <input type="password" placeholder="Clave de acceso">
+    <input id="loginUser" type="text" placeholder="Usuario">
+    <input id="loginPass" type="password" placeholder="Clave de acceso">
+    <div id="loginError" style="color:#E4785A; font-family:'IBM Plex Mono'; font-size:12px; margin-bottom:12px; min-height:18px;"></div>
     <div class="row2">
-      <button class="btn btn-solid" style="flex:1; justify-content:center; background:var(--brass); border-color:var(--brass); color:var(--ink);" onclick="enterDash()">Entrar al panel</button>
+      <button id="loginSubmit" class="btn btn-solid" style="flex:1; justify-content:center; background:var(--brass); border-color:var(--brass); color:var(--ink);">Entrar al panel</button>
     </div>
     <button id="gateClose" onclick="closeGate()">Cancelar</button>
   </div>
@@ -725,6 +726,11 @@
 
   const privateBtn = document.getElementById('privateBtn');
   const dash = document.getElementById('dash');
+  const loginUser = document.getElementById('loginUser');
+  const loginPass = document.getElementById('loginPass');
+  const loginSubmit = document.getElementById('loginSubmit');
+  const loginError = document.getElementById('loginError');
+  let currentUser = null;
 
   function setPrivateButtonState(isLoggedIn){
     if (!privateBtn) return;
@@ -748,23 +754,66 @@
     document.documentElement.style.overflow = 'hidden';
   }
 
+  function clearLoginForm(){
+    if (loginUser) loginUser.value = '';
+    if (loginPass) loginPass.value = '';
+    if (loginError) loginError.textContent = '';
+  }
+
   function closeGate(){
     const gate = document.getElementById('gate');
     gate.classList.remove('show');
+    clearLoginForm();
     if (!dash.classList.contains('show')) {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
     }
   }
 
-  function enterDash(){
-    closeGate();
-    dash.classList.add('show');
-    setPrivateButtonState(true);
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    dash.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  async function enterDash(){
+    const username = loginUser ? loginUser.value.trim() : '';
+    const password = loginPass ? loginPass.value.trim() : '';
+
+    if (!username || !password) {
+      if (loginError) loginError.textContent = 'Ingresa usuario y contraseña.';
+      return;
+    }
+
+    if (loginSubmit) {
+      loginSubmit.disabled = true;
+      loginSubmit.textContent = 'Validando...';
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ username, password })
+      });
+      const data = await response.json();
+
+      if (!data.success) {
+        if (loginError) loginError.textContent = data.message || 'Credenciales inválidas.';
+        return;
+      }
+
+      currentUser = data.username;
+      clearLoginForm();
+      closeGate();
+      dash.classList.add('show');
+      setPrivateButtonState(true);
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      dash.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (error) {
+      if (loginError) loginError.textContent = 'No se pudo conectar con el servidor de autenticación.';
+    } finally {
+      if (loginSubmit) {
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = 'Entrar al panel';
+      }
+    }
   }
 
   function exitDash(){
@@ -777,6 +826,10 @@
   if (privateBtn) {
     setPrivateButtonState(false);
     privateBtn.addEventListener('click', togglePrivateAccess);
+  }
+
+  if (loginSubmit) {
+    loginSubmit.addEventListener('click', enterDash);
   }
 </script>
 
