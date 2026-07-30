@@ -88,6 +88,8 @@
     background:var(--paper); cursor:pointer;
   }
   #privateBtn:hover{background:var(--ink); color:var(--paper);}
+  #privateBtn.logged-in{background:var(--ink); color:var(--paper);}
+  #privateBtn.logged-in:hover{background:var(--brass); border-color:var(--brass); color:var(--ink);}
   @media (max-width:900px){ #topnav .navlinks{display:none;} }
 
   /* ---------- hero ---------- */
@@ -297,7 +299,7 @@
     <a href="#invierte">Invierte</a>
     <a href="#contacto">Contacto</a>
   </div>
-  <button id="privateBtn" onclick="openGate()">Login</button>
+  <button id="privateBtn">Login</button>
 </nav>
 
 <!-- ============ FLOOR RAIL (signature nav) ============ -->
@@ -717,6 +719,23 @@
   }
   calcSim();
 
+  const privateBtn = document.getElementById('privateBtn');
+  const dash = document.getElementById('dash');
+
+  function setPrivateButtonState(isLoggedIn){
+    if (!privateBtn) return;
+    privateBtn.textContent = isLoggedIn ? 'Logout' : 'Login';
+    privateBtn.classList.toggle('logged-in', isLoggedIn);
+  }
+
+  function togglePrivateAccess(){
+    if (dash.classList.contains('show')) {
+      exitDash();
+    } else {
+      openGate();
+    }
+  }
+
   // gate + dashboard
   function openGate(){
     const gate = document.getElementById('gate');
@@ -728,7 +747,7 @@
   function closeGate(){
     const gate = document.getElementById('gate');
     gate.classList.remove('show');
-    if (!document.getElementById('dash').classList.contains('show')) {
+    if (!dash.classList.contains('show')) {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
     }
@@ -736,8 +755,8 @@
 
   function enterDash(){
     closeGate();
-    const dash = document.getElementById('dash');
     dash.classList.add('show');
+    setPrivateButtonState(true);
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -745,9 +764,15 @@
   }
 
   function exitDash(){
-    document.getElementById('dash').classList.remove('show');
+    dash.classList.remove('show');
+    setPrivateButtonState(false);
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
+  }
+
+  if (privateBtn) {
+    setPrivateButtonState(false);
+    privateBtn.addEventListener('click', togglePrivateAccess);
   }
 </script>
 
