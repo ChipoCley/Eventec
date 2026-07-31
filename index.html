@@ -947,6 +947,7 @@
     const slide = card.querySelector('.apt-slide');
     const images = (card.dataset.images || '').split(',').map(entry => entry.trim()).filter(Boolean);
     let activeIndex = 0;
+    let autoRotateTimer = null;
 
     function showSlide(index) {
       if (!slide || !images.length) return;
@@ -955,10 +956,24 @@
       slide.alt = `${card.dataset.type || 'Tipo'} - vista ${activeIndex + 1}`;
     }
 
+    function startAutoRotate() {
+      if (autoRotateTimer) return;
+      autoRotateTimer = setInterval(() => {
+        showSlide(activeIndex + 1);
+      }, 4000);
+    }
+
+    function stopAutoRotate() {
+      if (!autoRotateTimer) return;
+      clearInterval(autoRotateTimer);
+      autoRotateTimer = null;
+    }
+
+    slide.addEventListener('mouseenter', startAutoRotate);
+    slide.addEventListener('mouseleave', stopAutoRotate);
     slide.addEventListener('click', () => openApartmentModal(card));
 
     showSlide(0);
-    setInterval(() => showSlide(activeIndex + 1), 3000);
   });
 
   if (aptModalClose) {
