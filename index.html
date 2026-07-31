@@ -159,14 +159,10 @@
   .apt-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
   .apt-card{border:1px solid var(--line); padding:30px; background:#fff; display:flex; flex-direction:column; gap:18px;}
   .apt-visual{position:relative; background:var(--paper-2); border:1px solid var(--line); padding:8px; min-height:220px; display:flex; align-items:center; justify-content:center;}
-  .apt-visual img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:1px solid rgba(20,21,26,.12); background:#f8f5ee;}
-  .apt-visual .apt-controls{position:absolute; inset:auto 10px 10px 10px; display:flex; justify-content:space-between; gap:8px;}
-  .apt-visual .apt-nav{border:none; background:rgba(20,21,26,.82); color:#fff; cursor:pointer; padding:8px 12px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em; text-transform:uppercase;}
-  .apt-visual .apt-nav:hover{background:var(--brass); color:var(--ink);}
+  .apt-visual img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:1px solid rgba(20,21,26,.12); background:#f8f5ee; cursor:pointer;}
   .apt-card h4{font-size:20px;}
   .apt-card .meta{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--brass-dim); margin:0 0 14px;}
   .apt-card .desc{font-size:13.5px; color:var(--stone); border-top:1px solid var(--line); padding-top:14px;}
-  .apt-card .apt-open{width:100%; justify-content:center;}
   @media (max-width:900px){ .apt-grid{grid-template-columns:1fr;} }
 
   /* modal de detalle de tipos */
@@ -432,41 +428,26 @@
       <div class="apt-card" data-images="tipo1/tipo1_1.jpeg,tipo1/tipo1_2.jpeg,tipo1/tipo1_3.png" data-type="Tipo 1" data-copy="Sala, cocina/comedor integrados y recámara con balcón.">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo1/tipo1_1.jpeg" alt="Plano tipo 1 - vista 1">
-          <div class="apt-controls">
-            <button class="apt-nav apt-prev" type="button">Anterior</button>
-            <button class="apt-nav apt-next" type="button">Siguiente</button>
-          </div>
         </div>
         <h4>Tipo 1</h4>
         <div class="meta">57.1 m² · 1 recámara · 23 unidades</div>
         <div class="desc">Sala, cocina/comedor integrados y recámara con balcón.</div>
-        <button class="btn btn-solid apt-open" type="button">Abrir tipo 1</button>
       </div>
       <div class="apt-card" data-images="tipo2/tipo2_1 - copia.jpeg,tipo2/tipo2_2 - copia.jpeg,tipo2/tipo2_3 - copia.jpeg" data-type="Tipo 2 · Loft" data-copy="Doble altura tipo loft, ½ baño de visitas y área de servicio.">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo2/tipo2_1 - copia.jpeg" alt="Plano tipo 2 - vista 1">
-          <div class="apt-controls">
-            <button class="apt-nav apt-prev" type="button">Anterior</button>
-            <button class="apt-nav apt-next" type="button">Siguiente</button>
-          </div>
         </div>
         <h4>Tipo 2 · Loft</h4>
         <div class="meta">71.3 m² · 1 recámara · 21 unidades</div>
         <div class="desc">Doble altura tipo loft, ½ baño de visitas y área de servicio.</div>
-        <button class="btn btn-solid apt-open" type="button">Abrir tipo 2</button>
       </div>
       <div class="apt-card" data-images="tipo3/tipo3_1.jpeg,tipo3/tipo3_2.jpeg,tipo3/tipo3_3.jpeg" data-type="Tipo 3" data-copy="Recámara principal con baño propio y segunda recámara independiente.">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo3/tipo3_1.jpeg" alt="Plano tipo 3 - vista 1">
-          <div class="apt-controls">
-            <button class="apt-nav apt-prev" type="button">Anterior</button>
-            <button class="apt-nav apt-next" type="button">Siguiente</button>
-          </div>
         </div>
         <h4>Tipo 3</h4>
         <div class="meta">91.9 m² · 2 recámaras · 6 unidades</div>
         <div class="desc">Recámara principal con baño propio y segunda recámara independiente.</div>
-        <button class="btn btn-solid apt-open" type="button">Abrir tipo 3</button>
       </div>
     </div>
   </div>
@@ -964,9 +945,6 @@
 
   apartmentCards.forEach((card) => {
     const slide = card.querySelector('.apt-slide');
-    const prev = card.querySelector('.apt-prev');
-    const next = card.querySelector('.apt-next');
-    const opener = card.querySelector('.apt-open');
     const images = (card.dataset.images || '').split(',').map(entry => entry.trim()).filter(Boolean);
     let activeIndex = 0;
 
@@ -977,28 +955,10 @@
       slide.alt = `${card.dataset.type || 'Tipo'} - vista ${activeIndex + 1}`;
     }
 
-    if (prev) {
-      prev.addEventListener('click', (event) => {
-        event.stopPropagation();
-        showSlide(activeIndex - 1);
-      });
-    }
-
-    if (next) {
-      next.addEventListener('click', (event) => {
-        event.stopPropagation();
-        showSlide(activeIndex + 1);
-      });
-    }
-
-    if (opener) {
-      opener.addEventListener('click', (event) => {
-        event.stopPropagation();
-        openApartmentModal(card);
-      });
-    }
+    slide.addEventListener('click', () => openApartmentModal(card));
 
     showSlide(0);
+    setInterval(() => showSlide(activeIndex + 1), 3000);
   });
 
   if (aptModalClose) {
