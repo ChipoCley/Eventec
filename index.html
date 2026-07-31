@@ -177,14 +177,20 @@
   .apt-modal-gallery{display:grid; gap:10px;}
   .apt-modal-gallery img{width:100%; aspect-ratio:4/3; object-fit:contain; border:1px solid var(--line); background:#fff;}
   .apt-modal-side{display:grid; grid-template-columns:1fr; gap:10px;}
-  .apt-modal-side img{width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid var(--line); background:#f8f5ee;}
+  .apt-modal-side button{padding:0; border:1px solid var(--line); background:#f8f5ee; cursor:pointer;}
+  .apt-modal-side img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:none; background:#f8f5ee;}
   .apt-modal-note{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--brass-dim); text-transform:uppercase; margin-bottom:12px;}
   .apt-modal-meta{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:4px;}
   .apt-modal-meta .item{padding:14px; border:1px solid var(--line); background:#fff;}
   .apt-modal-meta .item .lbl{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--stone); text-transform:uppercase; margin-bottom:6px;}
   .apt-modal-meta .item .val{font-size:15px; color:var(--ink);}
   .apt-modal-actions{display:flex; gap:12px; justify-content:flex-end; margin-top:18px; flex-wrap:wrap;}
-  @media (max-width:760px){ .apt-modal-meta{grid-template-columns:1fr;} }
+
+  #aptPreviewModal{position:fixed; inset:0; background:rgba(20,21,26,.82); backdrop-filter:blur(4px); z-index:130; display:none; align-items:center; justify-content:center; padding:24px;}
+  #aptPreviewModal.show{display:flex;}
+  .apt-preview-box{background:#fff; border:1px solid var(--brass); width:min(900px, 94vw); padding:16px;}
+  .apt-preview-box img{width:100%; max-height:78vh; object-fit:contain; display:block; background:#f8f5ee;}
+  @media (max-width:760px){ .apt-modal-layout{grid-template-columns:1fr;} .apt-modal-meta{grid-template-columns:1fr;} }
 
   /* amenidades */
   #amenidades{background:var(--paper-2);}
@@ -614,6 +620,7 @@
     <div class="apt-modal-layout">
       <div class="apt-modal-gallery">
         <img id="aptModalPlan" src="" alt="Plano del tipo">
+        <img id="aptModalBottomImage" src="" alt="Imagen adicional del tipo">
       </div>
       <div class="apt-modal-side" id="aptModalSideGallery"></div>
     </div>
@@ -630,6 +637,13 @@
     <div class="apt-modal-actions">
       <button class="btn btn-brass" type="button" data-close-modal>Cerrar</button>
     </div>
+  </div>
+</div>
+
+<!-- ============ PREVIEW MODAL ============ -->
+<div id="aptPreviewModal">
+  <div class="apt-preview-box">
+    <img id="aptPreviewImage" src="" alt="Vista ampliada">
   </div>
 </div>
 
@@ -908,14 +922,17 @@
   const aptModalTitle = document.getElementById('aptModalTitle');
   const aptModalCopy = document.getElementById('aptModalCopy');
   const aptModalPlan = document.getElementById('aptModalPlan');
+  const aptModalBottomImage = document.getElementById('aptModalBottomImage');
   const aptModalSideGallery = document.getElementById('aptModalSideGallery');
   const aptModalType = document.getElementById('aptModalType');
   const aptModalDetail = document.getElementById('aptModalDetail');
   const aptModalClose = document.querySelector('.apt-modal-close');
   const aptModalCancel = document.querySelector('[data-close-modal]');
+  const aptPreviewModal = document.getElementById('aptPreviewModal');
+  const aptPreviewImage = document.getElementById('aptPreviewImage');
 
   function openApartmentModal(card){
-    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalPlan || !aptModalSideGallery || !aptModalType || !aptModalDetail) return;
+    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalPlan || !aptModalBottomImage || !aptModalSideGallery || !aptModalType || !aptModalDetail) return;
     const plan = card.dataset.plan || '';
     const images = (card.dataset.images || '').split(',').map(entry => entry.trim()).filter(Boolean);
     const type = card.dataset.type || 'Tipo';
@@ -928,12 +945,33 @@
     aptModalPlan.src = plan;
     aptModalPlan.alt = `${type} - plano`;
 
+    if (images[2]) {
+      aptModalBottomImage.src = images[2];
+      aptModalBottomImage.alt = `${type} - vista 3`;
+    } else {
+      aptModalBottomImage.removeAttribute('src');
+      aptModalBottomImage.alt = `${type} - vista adicional`;
+    }
+
     aptModalSideGallery.innerHTML = '';
-    images.forEach((src, index) => {
+    images.slice(0, 2).forEach((src, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', `${type} - vista ${index + 1}`);
       const img = document.createElement('img');
       img.src = src;
       img.alt = `${type} - vista ${index + 1}`;
-      aptModalSideGallery.appendChild(img);
+      button.appendChild(img);
+      button.addEventListener('click', () => {
+        if (aptPreviewImage) {
+          aptPreviewImage.src = src;
+          aptPreviewImage.alt = `${type} - vista ${index + 1}`;
+        }
+        if (aptPreviewModal) aptPreviewModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      });
+      aptModalSideGallery.appendChild(button);
     });
 
     aptModal.classList.add('show');
@@ -994,6 +1032,18 @@
   if (aptModal) {
     aptModal.addEventListener('click', (event) => {
       if (event.target === aptModal) closeApartmentModal();
+    });
+  }
+
+  if (aptPreviewModal) {
+    aptPreviewModal.addEventListener('click', (event) => {
+      if (event.target === aptPreviewModal) {
+        aptPreviewModal.classList.remove('show');
+        if (!dash.classList.contains('show') && !document.getElementById('gate').classList.contains('show')) {
+          document.body.style.overflow = '';
+          document.documentElement.style.overflow = '';
+        }
+      }
     });
   }
 </script>
