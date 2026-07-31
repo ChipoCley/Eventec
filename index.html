@@ -173,8 +173,11 @@
   .apt-modal-head h3{font-size:28px; margin-bottom:6px;}
   .apt-modal-head p{font-size:14px; color:var(--stone); line-height:1.6;}
   .apt-modal-close{border:none; background:none; font-size:28px; line-height:1; cursor:pointer; color:var(--stone);}
-  .apt-modal-gallery{display:grid; grid-template-columns:1fr; gap:10px; margin:18px 0 22px;}
+  .apt-modal-layout{display:grid; grid-template-columns:1.25fr .85fr; gap:16px; align-items:start; margin:18px 0 22px;}
+  .apt-modal-gallery{display:grid; gap:10px;}
   .apt-modal-gallery img{width:100%; aspect-ratio:4/3; object-fit:contain; border:1px solid var(--line); background:#fff;}
+  .apt-modal-side{display:grid; grid-template-columns:1fr; gap:10px;}
+  .apt-modal-side img{width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid var(--line); background:#f8f5ee;}
   .apt-modal-note{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--brass-dim); text-transform:uppercase; margin-bottom:12px;}
   .apt-modal-meta{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:4px;}
   .apt-modal-meta .item{padding:14px; border:1px solid var(--line); background:#fff;}
@@ -608,8 +611,11 @@
       <button class="apt-modal-close" type="button" aria-label="Cerrar detalle">×</button>
     </div>
     <div class="apt-modal-note">Plano del tipo</div>
-    <div class="apt-modal-gallery">
-      <img id="aptModalPlan" src="" alt="Plano del tipo">
+    <div class="apt-modal-layout">
+      <div class="apt-modal-gallery">
+        <img id="aptModalPlan" src="" alt="Plano del tipo">
+      </div>
+      <div class="apt-modal-side" id="aptModalSideGallery"></div>
     </div>
     <div class="apt-modal-meta">
       <div class="item">
@@ -902,14 +908,16 @@
   const aptModalTitle = document.getElementById('aptModalTitle');
   const aptModalCopy = document.getElementById('aptModalCopy');
   const aptModalPlan = document.getElementById('aptModalPlan');
+  const aptModalSideGallery = document.getElementById('aptModalSideGallery');
   const aptModalType = document.getElementById('aptModalType');
   const aptModalDetail = document.getElementById('aptModalDetail');
   const aptModalClose = document.querySelector('.apt-modal-close');
   const aptModalCancel = document.querySelector('[data-close-modal]');
 
   function openApartmentModal(card){
-    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalPlan || !aptModalType || !aptModalDetail) return;
+    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalPlan || !aptModalSideGallery || !aptModalType || !aptModalDetail) return;
     const plan = card.dataset.plan || '';
+    const images = (card.dataset.images || '').split(',').map(entry => entry.trim()).filter(Boolean);
     const type = card.dataset.type || 'Tipo';
     const copy = card.dataset.copy || 'Aquí puedes completar fotos e información adicional.';
     const detail = card.dataset.detail || 'Información disponible';
@@ -919,6 +927,14 @@
     aptModalDetail.textContent = detail;
     aptModalPlan.src = plan;
     aptModalPlan.alt = `${type} - plano`;
+
+    aptModalSideGallery.innerHTML = '';
+    images.forEach((src, index) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `${type} - vista ${index + 1}`;
+      aptModalSideGallery.appendChild(img);
+    });
 
     aptModal.classList.add('show');
     document.body.style.overflow = 'hidden';
