@@ -177,8 +177,8 @@
   .apt-modal-gallery{display:grid; gap:10px;}
   .apt-modal-gallery img{width:100%; aspect-ratio:4/3; object-fit:contain; border:1px solid var(--line); background:#fff;}
   .apt-modal-side{display:grid; grid-template-columns:1fr; gap:10px;}
-  .apt-modal-side button{padding:0; border:1px solid var(--line); background:#f8f5ee; cursor:pointer;}
-  .apt-modal-side img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:none; background:#f8f5ee;}
+  .apt-modal-side button, .apt-modal-gallery button{padding:0; border:1px solid var(--line); background:#f8f5ee; cursor:pointer;}
+  .apt-modal-side img, .apt-modal-gallery button img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:none; background:#f8f5ee;}
   .apt-modal-note{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--brass-dim); text-transform:uppercase; margin-bottom:12px;}
   .apt-modal-meta{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:4px;}
   .apt-modal-meta .item{padding:14px; border:1px solid var(--line); background:#fff;}
@@ -620,7 +620,9 @@
     <div class="apt-modal-layout">
       <div class="apt-modal-gallery">
         <img id="aptModalPlan" src="" alt="Plano del tipo">
-        <img id="aptModalBottomImage" src="" alt="Imagen adicional del tipo">
+        <button id="aptModalBottomButton" type="button" aria-label="Ampliar imagen adicional">
+          <img id="aptModalBottomImage" src="" alt="Imagen adicional del tipo">
+        </button>
       </div>
       <div class="apt-modal-side" id="aptModalSideGallery"></div>
     </div>
@@ -922,6 +924,7 @@
   const aptModalTitle = document.getElementById('aptModalTitle');
   const aptModalCopy = document.getElementById('aptModalCopy');
   const aptModalPlan = document.getElementById('aptModalPlan');
+  const aptModalBottomButton = document.getElementById('aptModalBottomButton');
   const aptModalBottomImage = document.getElementById('aptModalBottomImage');
   const aptModalSideGallery = document.getElementById('aptModalSideGallery');
   const aptModalType = document.getElementById('aptModalType');
@@ -948,6 +951,15 @@
     if (images[2]) {
       aptModalBottomImage.src = images[2];
       aptModalBottomImage.alt = `${type} - vista 3`;
+      aptModalBottomButton.onclick = () => {
+        if (aptPreviewImage) {
+          aptPreviewImage.src = images[2];
+          aptPreviewImage.alt = `${type} - vista 3`;
+        }
+        if (aptPreviewModal) aptPreviewModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      };
     } else {
       aptModalBottomImage.removeAttribute('src');
       aptModalBottomImage.alt = `${type} - vista adicional`;
