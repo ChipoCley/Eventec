@@ -173,16 +173,15 @@
   .apt-modal-head h3{font-size:28px; margin-bottom:6px;}
   .apt-modal-head p{font-size:14px; color:var(--stone); line-height:1.6;}
   .apt-modal-close{border:none; background:none; font-size:28px; line-height:1; cursor:pointer; color:var(--stone);}
-  .apt-modal-gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0 22px;}
-  .apt-modal-gallery img{width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid var(--line);}
+  .apt-modal-gallery{display:grid; grid-template-columns:1fr; gap:10px; margin:18px 0 22px;}
+  .apt-modal-gallery img{width:100%; aspect-ratio:4/3; object-fit:contain; border:1px solid var(--line); background:#fff;}
   .apt-modal-note{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--brass-dim); text-transform:uppercase; margin-bottom:12px;}
-  .apt-modal-fields{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-  .apt-modal-fields .full{grid-column:1/-1;}
-  .apt-modal-fields label{display:block; margin-bottom:7px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--stone); text-transform:uppercase;}
-  .apt-modal-fields input, .apt-modal-fields textarea{width:100%; padding:12px 14px; border:1px solid var(--line); background:#fff; font-size:14px; font-family:'Inter',sans-serif;}
-  .apt-modal-fields textarea{min-height:110px; resize:vertical;}
+  .apt-modal-meta{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:4px;}
+  .apt-modal-meta .item{padding:14px; border:1px solid var(--line); background:#fff;}
+  .apt-modal-meta .item .lbl{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--stone); text-transform:uppercase; margin-bottom:6px;}
+  .apt-modal-meta .item .val{font-size:15px; color:var(--ink);}
   .apt-modal-actions{display:flex; gap:12px; justify-content:flex-end; margin-top:18px; flex-wrap:wrap;}
-  @media (max-width:760px){ .apt-modal-gallery{grid-template-columns:1fr;} .apt-modal-fields{grid-template-columns:1fr;} }
+  @media (max-width:760px){ .apt-modal-meta{grid-template-columns:1fr;} }
 
   /* amenidades */
   #amenidades{background:var(--paper-2);}
@@ -425,7 +424,7 @@
       <p>Cada unidad con simulador de decoración: acabados y mobiliario disponibles para entrega llave en mano.</p>
     </div>
     <div class="apt-grid">
-      <div class="apt-card" data-images="tipo1/tipo1_1.jpeg,tipo1/tipo1_2.jpeg,tipo1/tipo1_3.png" data-type="Tipo 1" data-copy="Sala, cocina/comedor integrados y recámara con balcón.">
+      <div class="apt-card" data-images="tipo1/tipo1_1.jpeg,tipo1/tipo1_2.jpeg,tipo1/tipo1_3.png" data-plan="tipo1/tipo1_planos.png" data-type="Tipo 1" data-copy="Sala, cocina/comedor integrados y recámara con balcón." data-detail="57.1 m² · 1 recámara · 23 unidades">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo1/tipo1_1.jpeg" alt="Plano tipo 1 - vista 1">
         </div>
@@ -433,7 +432,7 @@
         <div class="meta">57.1 m² · 1 recámara · 23 unidades</div>
         <div class="desc">Sala, cocina/comedor integrados y recámara con balcón.</div>
       </div>
-      <div class="apt-card" data-images="tipo2/tipo2_1 - copia.jpeg,tipo2/tipo2_2 - copia.jpeg,tipo2/tipo2_3 - copia.jpeg" data-type="Tipo 2 · Loft" data-copy="Doble altura tipo loft, ½ baño de visitas y área de servicio.">
+      <div class="apt-card" data-images="tipo2/tipo2_1 - copia.jpeg,tipo2/tipo2_2 - copia.jpeg,tipo2/tipo2_3 - copia.jpeg" data-plan="tipo2/tipo2_planos.png" data-type="Tipo 2 · Loft" data-copy="Doble altura tipo loft, ½ baño de visitas y área de servicio." data-detail="71.3 m² · 1 recámara · 21 unidades">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo2/tipo2_1 - copia.jpeg" alt="Plano tipo 2 - vista 1">
         </div>
@@ -441,7 +440,7 @@
         <div class="meta">71.3 m² · 1 recámara · 21 unidades</div>
         <div class="desc">Doble altura tipo loft, ½ baño de visitas y área de servicio.</div>
       </div>
-      <div class="apt-card" data-images="tipo3/tipo3_1.jpeg,tipo3/tipo3_2.jpeg,tipo3/tipo3_3.jpeg" data-type="Tipo 3" data-copy="Recámara principal con baño propio y segunda recámara independiente.">
+      <div class="apt-card" data-images="tipo3/tipo3_1.jpeg,tipo3/tipo3_2.jpeg,tipo3/tipo3_3.jpeg" data-plan="tipo3/tipo3_planos.png" data-type="Tipo 3" data-copy="Recámara principal con baño propio y segunda recámara independiente." data-detail="91.9 m² · 2 recámaras · 6 unidades">
         <div class="apt-visual">
           <img class="apt-slide" src="tipo3/tipo3_1.jpeg" alt="Plano tipo 3 - vista 1">
         </div>
@@ -608,29 +607,22 @@
       </div>
       <button class="apt-modal-close" type="button" aria-label="Cerrar detalle">×</button>
     </div>
-    <div class="apt-modal-note">Vista rápida del bloque</div>
-    <div class="apt-modal-gallery" id="aptModalGallery"></div>
-    <div class="apt-modal-fields">
-      <div class="full">
-        <label>Fotos adicionales</label>
-        <input type="text" placeholder="Agrega rutas o enlaces de imágenes">
+    <div class="apt-modal-note">Plano del tipo</div>
+    <div class="apt-modal-gallery">
+      <img id="aptModalPlan" src="" alt="Plano del tipo">
+    </div>
+    <div class="apt-modal-meta">
+      <div class="item">
+        <div class="lbl">Tipo</div>
+        <div class="val" id="aptModalType">Tipo 1</div>
       </div>
-      <div>
-        <label>Área útil</label>
-        <input type="text" placeholder="Ej. 57.1 m²">
-      </div>
-      <div>
-        <label>Recámaras</label>
-        <input type="text" placeholder="Ej. 1 recámara">
-      </div>
-      <div class="full">
-        <label>Información adicional</label>
-        <textarea placeholder="Agrega aquí observaciones, acabados, vista, orientación o fechas."></textarea>
+      <div class="item">
+        <div class="lbl">Detalle</div>
+        <div class="val" id="aptModalDetail">57.1 m² · 1 recámara</div>
       </div>
     </div>
     <div class="apt-modal-actions">
-      <button class="btn btn-brass" type="button" data-close-modal>Cancelar</button>
-      <button class="btn btn-solid" type="button">Guardar información</button>
+      <button class="btn btn-brass" type="button" data-close-modal>Cerrar</button>
     </div>
   </div>
 </div>
@@ -909,25 +901,24 @@
   const aptModal = document.getElementById('aptModal');
   const aptModalTitle = document.getElementById('aptModalTitle');
   const aptModalCopy = document.getElementById('aptModalCopy');
-  const aptModalGallery = document.getElementById('aptModalGallery');
+  const aptModalPlan = document.getElementById('aptModalPlan');
+  const aptModalType = document.getElementById('aptModalType');
+  const aptModalDetail = document.getElementById('aptModalDetail');
   const aptModalClose = document.querySelector('.apt-modal-close');
   const aptModalCancel = document.querySelector('[data-close-modal]');
 
   function openApartmentModal(card){
-    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalGallery) return;
-    const images = (card.dataset.images || '').split(',').map(entry => entry.trim()).filter(Boolean);
+    if (!card || !aptModal || !aptModalTitle || !aptModalCopy || !aptModalPlan || !aptModalType || !aptModalDetail) return;
+    const plan = card.dataset.plan || '';
     const type = card.dataset.type || 'Tipo';
     const copy = card.dataset.copy || 'Aquí puedes completar fotos e información adicional.';
+    const detail = card.dataset.detail || 'Información disponible';
     aptModalTitle.textContent = type;
     aptModalCopy.textContent = copy;
-    aptModalGallery.innerHTML = '';
-
-    images.forEach((src, index) => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = `${type} - vista ${index + 1}`;
-      aptModalGallery.appendChild(img);
-    });
+    aptModalType.textContent = type;
+    aptModalDetail.textContent = detail;
+    aptModalPlan.src = plan;
+    aptModalPlan.alt = `${type} - plano`;
 
     aptModal.classList.add('show');
     document.body.style.overflow = 'hidden';
