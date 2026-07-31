@@ -158,7 +158,8 @@
   /* departamentos */
   .apt-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
   .apt-card{border:1px solid var(--line); padding:30px; background:#fff;}
-  .apt-card .apt-plan{height:150px; background:repeating-linear-gradient(45deg, #EFEAE0, #EFEAE0 8px, #E5DFD1 8px, #E5DFD1 16px); border:1px solid var(--line); margin-bottom:20px; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--stone); text-transform:uppercase;}
+  .apt-card .apt-plan{margin-bottom:20px; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:8px; background:var(--paper-2); border:1px solid var(--line);}
+  .apt-card .apt-plan img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:1px solid rgba(20,21,26,.12); background:#f8f5ee;}
   .apt-card h4{font-size:20px;}
   .apt-card .meta{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--brass-dim); margin:10px 0 14px;}
   .apt-card .desc{font-size:13.5px; color:var(--stone); border-top:1px solid var(--line); padding-top:14px;}
@@ -406,19 +407,31 @@
     </div>
     <div class="apt-grid">
       <div class="apt-card">
-        <div class="apt-plan">Plano tipo 1</div>
+        <div class="apt-plan">
+          <img src="tipo1/tipo1_1.jpeg" alt="Plano tipo 1 - vista 1">
+          <img src="tipo1/tipo1_2.jpeg" alt="Plano tipo 1 - vista 2">
+          <img src="tipo1/tipo1_3.png" alt="Plano tipo 1 - vista 3">
+        </div>
         <h4>Tipo 1</h4>
         <div class="meta">57.1 m² · 1 recámara · 23 unidades</div>
         <div class="desc">Sala, cocina/comedor integrados y recámara con balcón.</div>
       </div>
       <div class="apt-card">
-        <div class="apt-plan">Plano tipo 2</div>
+        <div class="apt-plan">
+          <img src="tipo2/tipo2_1 - copia.jpeg" alt="Plano tipo 2 - vista 1">
+          <img src="tipo2/tipo2_2 - copia.jpeg" alt="Plano tipo 2 - vista 2">
+          <img src="tipo2/tipo2_3 - copia.jpeg" alt="Plano tipo 2 - vista 3">
+        </div>
         <h4>Tipo 2 · Loft</h4>
         <div class="meta">71.3 m² · 1 recámara · 21 unidades</div>
         <div class="desc">Doble altura tipo loft, ½ baño de visitas y área de servicio.</div>
       </div>
       <div class="apt-card">
-        <div class="apt-plan">Plano tipo 3</div>
+        <div class="apt-plan">
+          <img src="tipo3/tipo3_1.jpeg" alt="Plano tipo 3 - vista 1">
+          <img src="tipo3/tipo3_2.jpeg" alt="Plano tipo 3 - vista 2">
+          <img src="tipo3/tipo3_3.jpeg" alt="Plano tipo 3 - vista 3">
+        </div>
         <h4>Tipo 3</h4>
         <div class="meta">91.9 m² · 2 recámaras · 6 unidades</div>
         <div class="desc">Recámara principal con baño propio y segunda recámara independiente.</div>
