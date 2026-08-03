@@ -779,6 +779,7 @@
   </div>
 </div>
 
+<script src="config.js"></script>
 <script>
   // floor rail highlight
   const floors = document.querySelectorAll('.floor');
@@ -871,7 +872,8 @@
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/login', {
+      const backendUrl = window.__BACKEND_URL__ || 'http://127.0.0.1:8000';
+      const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ username, password })

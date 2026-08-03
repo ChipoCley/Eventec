@@ -1,0 +1,38 @@
+import json
+import os
+from http import HTTPStatus
+from urllib.parse import parse_qs
+
+from auth_service import authenticate_user
+
+
+def handler(event, context=None):
+    try:
+        body = event.get("body", "") or ""
+        if isinstance(body, str):
+            data = parse_qs(body)
+        else:
+            data = body
+        username = data.get("username", [""])[0].strip()
+        password = data.get("password", [""])[0].strip()
+
+        result = authenticate_user(username, password)
+        return {
+            "statusCode": HTTPStatus.OK,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type",
+            },
+            "body": json.dumps(result),
+        }
+    except Exception as exc:
+        return {
+            "statusCode": HTTPStatus.INTERNAL_SERVER_ERROR,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            "body": json.dumps({"success": False, "message": str(exc)}),
+        }
