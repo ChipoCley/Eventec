@@ -212,9 +212,9 @@
   @media (max-width:560px){ .vid-grid{grid-template-columns:1fr;} }
 
   /* ubicacion */
-  .loc-wrap{display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
-  .loc-map{background:var(--paper-2); min-height:420px; position:relative; overflow:hidden;}
-  .loc-map .leaflet-container{width:100%; height:420px; background:#dbeaf2;}
+  .loc-wrap{display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); border:1px solid var(--line); align-items:stretch;}
+  .loc-map{background:var(--paper-2); min-height:420px; height:100%; position:relative; overflow:hidden;}
+  #locationMapEmbed{display:block; width:100%; height:100%; min-height:420px; border:0; background:#dbeaf2;}
   .loc-map::after{content:"◎ NEXUS CD. GRANJA — ZAPOPAN, JAL."; position:absolute; bottom:20px; left:20px; font-size:11px; z-index:500; color:var(--ink); background:rgba(243,239,231,.82); padding:6px 10px; border:1px solid rgba(20,21,26,.12); font-family:'IBM Plex Mono',monospace; text-transform:uppercase;}
   .loc-list{background:#fff;}
   .loc-row{display:flex; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid var(--line); font-size:14px; cursor:pointer; transition:background .18s ease;}
@@ -539,15 +539,17 @@
     </div>
     <div class="loc-wrap">
       <div class="loc-list">
-        <div class="loc-row" data-lat="20.6754" data-lng="-103.4501" data-title="Calzada Central" data-desc="Dirección del proyecto"><span>Calzada Central 261</span><span class="d">Ubicación del proyecto</span></div>
-        <div class="loc-row" data-lat="20.6750" data-lng="-103.4492" data-title="Parque de la colonia" data-desc="6 min caminando"><span>Parque de la colonia</span><span class="d">6 min caminando</span></div>
-        <div class="loc-row" data-lat="20.6762" data-lng="-103.4488" data-title="Escuela primaria" data-desc="7 min caminando"><span>Escuela primaria</span><span class="d">7 min caminando</span></div>
-        <div class="loc-row" data-lat="20.6758" data-lng="-103.4499" data-title="Mini súper" data-desc="3 min caminando"><span>Mini súper</span><span class="d">3 min caminando</span></div>
-        <div class="loc-row" data-lat="20.6748" data-lng="-103.4523" data-title="Farmacia" data-desc="5 min en auto"><span>Farmacia</span><span class="d">5 min en auto</span></div>
-        <div class="loc-row" data-lat="20.6771" data-lng="-103.4516" data-title="Transporte público" data-desc="4 min caminando"><span>Transporte público</span><span class="d">4 min caminando</span></div>
-        <div class="loc-row" data-lat="20.6738" data-lng="-103.4485" data-title="Centro comercial" data-desc="10 min en auto"><span>Centro comercial</span><span class="d">10 min en auto</span></div>
+        <div class="loc-row" data-query="Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco" data-title="Calzada Central" data-desc="Dirección del proyecto"><span>Calzada Central 261</span><span class="d">Ubicación del proyecto</span></div>
+        <div class="loc-row" data-query="Parque+Ciudad+Granja+Zapopan+Jalisco" data-title="Parque de la colonia" data-desc="6 min caminando"><span>Parque de la colonia</span><span class="d">6 min caminando</span></div>
+        <div class="loc-row" data-query="Escuela+primaria+Ciudad+Granja+Zapopan+Jalisco" data-title="Escuela primaria" data-desc="7 min caminando"><span>Escuela primaria</span><span class="d">7 min caminando</span></div>
+        <div class="loc-row" data-query="Mini+super+Ciudad+Granja+Zapopan+Jalisco" data-title="Mini súper" data-desc="3 min caminando"><span>Mini súper</span><span class="d">3 min caminando</span></div>
+        <div class="loc-row" data-query="Farmacia+Ciudad+Granja+Zapopan+Jalisco" data-title="Farmacia" data-desc="5 min en auto"><span>Farmacia</span><span class="d">5 min en auto</span></div>
+        <div class="loc-row" data-query="Transporte+público+Ciudad+Granja+Zapopan+Jalisco" data-title="Transporte público" data-desc="4 min caminando"><span>Transporte público</span><span class="d">4 min caminando</span></div>
+        <div class="loc-row" data-query="Centro+comercial+Ciudad+Granja+Zapopan+Jalisco" data-title="Centro comercial" data-desc="10 min en auto"><span>Centro comercial</span><span class="d">10 min en auto</span></div>
       </div>
-      <div class="loc-map" id="locationMap" aria-label="Mapa de ubicación"></div>
+      <div class="loc-map">
+        <iframe id="locationMapEmbed" title="Mapa de ubicación" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco&z=16&output=embed"></iframe>
+      </div>
     </div>
     <div class="loc-legend"><span class="loc-dot"></span> Puntos de interés cercanos</div>
     <div class="loc-actions">
@@ -1069,6 +1071,6 @@
     });
   }
 </script>
-
+<script src="script.js"></script>
 </body>
 </html>
