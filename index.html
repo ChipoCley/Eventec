@@ -222,6 +222,8 @@
   .loc-row .d{font-family:'IBM Plex Mono',monospace; color:var(--brass-dim); font-size:12.5px;}
   .loc-legend{display:flex; align-items:center; gap:8px; margin-top:10px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--stone); text-transform:uppercase; letter-spacing:.04em;}
   .loc-dot{width:10px; height:10px; border-radius:50%; background:var(--brass); display:inline-block;}
+  .loc-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;}
+  .loc-actions .btn{padding:12px 16px;}
   @media (max-width:900px){ .loc-wrap{grid-template-columns:1fr;} }
 
   /* invierte */
@@ -538,14 +540,19 @@
     <div class="loc-wrap">
       <div class="loc-map" id="locationMap" aria-label="Mapa de ubicación"></div>
       <div class="loc-list">
-        <div class="loc-row" data-lat="20.7198" data-lng="-103.3906" data-title="Parque cercano" data-desc="6 min caminando"><span>Parque cercano</span><span class="d">6 min caminando</span></div>
-        <div class="loc-row" data-lat="20.7204" data-lng="-103.3892" data-title="Escuela primaria" data-desc="8 min caminando"><span>Escuela primaria</span><span class="d">8 min caminando</span></div>
-        <div class="loc-row" data-lat="20.7189" data-lng="-103.3910" data-title="Mini súper" data-desc="3 min caminando"><span>Mini súper</span><span class="d">3 min caminando</span></div>
-        <div class="loc-row" data-lat="20.7176" data-lng="-103.3927" data-title="Centro comercial" data-desc="10 min en auto"><span>Centro comercial</span><span class="d">10 min en auto</span></div>
-        <div class="loc-row" data-lat="20.7210" data-lng="-103.3879" data-title="Avenida principal" data-desc="2 min en auto"><span>Avenida principal</span><span class="d">2 min en auto</span></div>
+        <div class="loc-row" data-lat="20.6754" data-lng="-103.4501" data-title="Calzada Central" data-desc="Dirección del proyecto"><span>Calzada Central 261</span><span class="d">Ubicación del proyecto</span></div>
+        <div class="loc-row" data-lat="20.6750" data-lng="-103.4492" data-title="Parque de la colonia" data-desc="6 min caminando"><span>Parque de la colonia</span><span class="d">6 min caminando</span></div>
+        <div class="loc-row" data-lat="20.6762" data-lng="-103.4488" data-title="Escuela primaria" data-desc="7 min caminando"><span>Escuela primaria</span><span class="d">7 min caminando</span></div>
+        <div class="loc-row" data-lat="20.6758" data-lng="-103.4499" data-title="Mini súper" data-desc="3 min caminando"><span>Mini súper</span><span class="d">3 min caminando</span></div>
+        <div class="loc-row" data-lat="20.6748" data-lng="-103.4523" data-title="Farmacia" data-desc="5 min en auto"><span>Farmacia</span><span class="d">5 min en auto</span></div>
+        <div class="loc-row" data-lat="20.6771" data-lng="-103.4516" data-title="Transporte público" data-desc="4 min caminando"><span>Transporte público</span><span class="d">4 min caminando</span></div>
+        <div class="loc-row" data-lat="20.6738" data-lng="-103.4485" data-title="Centro comercial" data-desc="10 min en auto"><span>Centro comercial</span><span class="d">10 min en auto</span></div>
       </div>
     </div>
     <div class="loc-legend"><span class="loc-dot"></span> Puntos de interés cercanos</div>
+    <div class="loc-actions">
+      <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&query=Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+    </div>
   </div>
 </section>
 

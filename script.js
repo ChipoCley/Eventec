@@ -21,10 +21,12 @@ function initLocationMap() {
     return;
   }
 
+  const projectCoordinates = [20.6754425, -103.4500785];
+
   const map = window.L.map('locationMap', {
     zoomControl: true,
     scrollWheelZoom: true,
-  }).setView([20.7198, -103.3905], 15);
+  }).setView(projectCoordinates, 16);
 
   window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -32,11 +34,12 @@ function initLocationMap() {
   }).addTo(map);
 
   const points = [
-    { title: 'Parque cercano', desc: '6 min caminando', coords: [20.7198, -103.3906] },
-    { title: 'Escuela primaria', desc: '8 min caminando', coords: [20.7204, -103.3892] },
-    { title: 'Mini súper', desc: '3 min caminando', coords: [20.7189, -103.3910] },
-    { title: 'Centro comercial', desc: '10 min en auto', coords: [20.7176, -103.3927] },
-    { title: 'Avenida principal', desc: '2 min en auto', coords: [20.7210, -103.3879] },
+    { title: 'Parque de la colonia', desc: '6 min caminando', coords: [20.6750, -103.4492] },
+    { title: 'Escuela primaria', desc: '7 min caminando', coords: [20.6762, -103.4488] },
+    { title: 'Mini súper', desc: '3 min caminando', coords: [20.6758, -103.4499] },
+    { title: 'Farmacia', desc: '5 min en auto', coords: [20.6748, -103.4523] },
+    { title: 'Transporte público', desc: '4 min caminando', coords: [20.6771, -103.4516] },
+    { title: 'Centro comercial', desc: '10 min en auto', coords: [20.6738, -103.4485] },
   ];
 
   const bounds = [];
@@ -53,9 +56,9 @@ function initLocationMap() {
     bounds.push(point.coords);
   });
 
-  const projectPin = window.L.marker([20.7198, -103.3905]).addTo(map);
-  projectPin.bindPopup('<strong>Nexus Cd. Granja</strong><br>Zapopan, Jalisco');
-  bounds.push([20.7198, -103.3905]);
+  const projectPin = window.L.marker(projectCoordinates).addTo(map);
+  projectPin.bindPopup('<strong>Calzada Central 261</strong><br>Ciudad Granja, Zapopan, Jalisco');
+  bounds.push(projectCoordinates);
 
   map.fitBounds(bounds, { padding: [22, 22] });
 
