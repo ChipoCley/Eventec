@@ -250,6 +250,16 @@
 
   footer{border-top:1px solid var(--line); padding:50px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; font-size:13px; color:var(--stone);}
 
+  /* ---------- confirmation modal ---------- */
+  #contactSuccess{
+    position:fixed; inset:0; background:rgba(20,21,26,.72); backdrop-filter:blur(3px); z-index:130;
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  #contactSuccess.show{display:flex;}
+  #contactSuccessBox{background:var(--paper); color:var(--ink); width:min(420px,92vw); padding:32px; border:1px solid var(--brass); box-shadow:0 24px 70px rgba(20,21,26,.22);}
+  #contactSuccessBox h3{font-size:24px; margin:8px 0 10px;}
+  #contactSuccessBox p{font-size:14px; line-height:1.65; color:var(--stone); margin-bottom:18px;}
+
   /* ---------- gate modal ---------- */
   #gate{
     position:fixed; inset:0; background:rgba(20,21,26,.72); backdrop-filter:blur(3px); z-index:100;
@@ -599,14 +609,14 @@
       <div><div class="eyebrow">Contacto</div><h2>Déjanos<br>tus datos</h2></div>
       <p>Tu solicitud se registra automáticamente y llega directo a WhatsApp — un asesor te da seguimiento.</p>
     </div>
-    <div class="form-grid">
-      <div><label>Nombre</label><input type="text" placeholder="Nombre completo"></div>
-      <div><label>Teléfono / WhatsApp</label><input type="text" placeholder="33 0000 0000"></div>
-      <div><label>Tipo de unidad</label><select><option>Tipo 1 · 1 recámara</option><option>Tipo 2 · Loft</option><option>Tipo 3 · 2 recámaras</option><option>Local comercial</option></select></div>
-      <div><label>Rango de precio</label><select><option>$1.8M – $2.5M</option><option>$2.5M – $3.2M</option><option>$3.2M+</option></select></div>
-      <div class="full"><label>Fecha de entrega deseada</label><input type="text" placeholder="Ej. antes de 12 meses"></div>
-      <div class="full"><button class="btn btn-solid" style="width:100%; justify-content:center;">Enviar solicitud</button></div>
-    </div>
+    <form id="contactForm" class="form-grid">
+      <div><label for="leadName">Nombre</label><input id="leadName" name="name" type="text" placeholder="Nombre completo" required></div>
+      <div><label for="leadPhone">Teléfono / WhatsApp</label><input id="leadPhone" name="phone" type="text" placeholder="33 0000 0000" required></div>
+      <div><label for="leadUnit">Tipo de unidad</label><select id="leadUnit" name="unit"><option>Tipo 1 · 1 recámara</option><option>Tipo 2 · Loft</option><option>Tipo 3 · 2 recámaras</option><option>Local comercial</option></select></div>
+      <div><label for="leadPrice">Rango de precio</label><select id="leadPrice" name="price"><option>$1.8M – $2.5M</option><option>$2.5M – $3.2M</option><option>$3.2M+</option></select></div>
+      <div class="full"><label for="leadDate">Fecha de entrega deseada</label><input id="leadDate" name="date" type="text" placeholder="Ej. antes de 12 meses"></div>
+      <div class="full"><button type="submit" class="btn btn-solid" style="width:100%; justify-content:center;">Enviar solicitud</button></div>
+    </form>
   </div>
 </section>
 
@@ -658,6 +668,16 @@
 <div id="aptPreviewModal">
   <div class="apt-preview-box">
     <img id="aptPreviewImage" src="" alt="Vista ampliada">
+  </div>
+</div>
+
+<!-- ============ CONTACT SUCCESS MODAL ============ -->
+<div id="contactSuccess">
+  <div id="contactSuccessBox">
+    <div class="eyebrow">Solicitud enviada</div>
+    <h3>Gracias por contactarnos</h3>
+    <p>Tu mensaje fue enviado al asesor de ventas. Un especialista se comunicará contigo después de recibir la solicitud.</p>
+    <button class="btn btn-solid" type="button" id="contactSuccessClose" style="width:100%; justify-content:center;">Entendido</button>
   </div>
 </div>
 
