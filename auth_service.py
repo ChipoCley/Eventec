@@ -8,9 +8,18 @@ load_dotenv()
 
 
 def get_db_connection():
-    connection_url = os.getenv("CUSTOM_URL") or os.getenv("DATABASE_URL")
+    connection_url = (
+        os.getenv("DATABASE_URL")
+        or os.getenv("CUSTOM_URL")
+        or os.getenv("STORAGE_POSTGRES_URL")
+        or os.getenv("STORAGE_POSTGRES_URL_NO_SSL")
+        or os.getenv("POSTGRES_URL")
+        or os.getenv("POSTGRES_PRISMA_URL")
+    )
+
     if not connection_url:
-        raise RuntimeError("DATABASE_URL or CUSTOM_URL must be set to use PostgreSQL/Neon.")
+        raise RuntimeError("No se encontró una URL de conexión válida para PostgreSQL/Neon. Define DATABASE_URL o STORAGE_POSTGRES_URL en Vercel.")
+
     return psycopg2.connect(connection_url)
 
 
@@ -29,8 +38,8 @@ def init_db():
             """
         )
 
-        cur.execute("SELECT COUNT(*) FROM users")
-        if cur.fetchone()[0] == 0:
+        cur.execute("SELECT username FROM users WHERE username = %s", ("admin",))
+        if cur.fetchone() is None:
             cur.execute(
                 "INSERT INTO users (username, password_hash, role) VALUES (%s, %s, %s)",
                 ("admin", hash_password("admin123"), "admin"),
