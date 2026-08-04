@@ -7,7 +7,7 @@ from auth_service import authenticate_user
 
 
 def handler(event, context=None):
-    method = (event.get("httpMethod") or "").upper()
+    method = (event.get("httpMethod") or event.get("method") or "").upper()
 
     if method == "OPTIONS":
         return {
