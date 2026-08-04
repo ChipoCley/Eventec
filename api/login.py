@@ -7,6 +7,32 @@ from auth_service import authenticate_user
 
 
 def handler(event, context=None):
+    method = (event.get("httpMethod") or "").upper()
+
+    if method == "OPTIONS":
+        return {
+            "statusCode": HTTPStatus.OK,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type",
+            },
+            "body": "",
+        }
+
+    if method != "POST":
+        return {
+            "statusCode": HTTPStatus.METHOD_NOT_ALLOWED,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type",
+            },
+            "body": json.dumps({"success": False, "message": "Method not allowed"}),
+        }
+
     try:
         body = event.get("body", "") or ""
         if isinstance(body, str):
