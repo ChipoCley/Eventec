@@ -1,7 +1,7 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/api/login", "dest": "/api/login.py" },
+    { "src": "/api/login", "dest": "/api/index.py" },
     { "src": "/api/(.*)", "dest": "/api/$1" }
   ]
 }
