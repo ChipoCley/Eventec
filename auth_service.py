@@ -6,38 +6,42 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CUSTOM_URL = os.getenv("CUSTOM_URL")
-
 
 def get_db_connection():
-    if not CUSTOM_URL:
-        raise RuntimeError("CUSTOM_URL must be set to use PostgreSQL/Neon.")
-    return psycopg2.connect(CUSTOM_URL)
+    connection_url = os.getenv("CUSTOM_URL") or os.getenv("DATABASE_URL")
+    if not connection_url:
+        raise RuntimeError("DATABASE_URL or CUSTOM_URL must be set to use PostgreSQL/Neon.")
+    return psycopg2.connect(connection_url)
 
 
 def init_db():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        """
-        CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            role TEXT NOT NULL DEFAULT 'user'
-        )
-        """
-    )
-
-    cur.execute("SELECT COUNT(*) FROM users")
-    if cur.fetchone()[0] == 0:
+    try:
         cur.execute(
-            "INSERT INTO users (username, password_hash, role) VALUES (%s, %s, %s)",
-            ("admin", hash_password("admin123"), "admin"),
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                username TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                role TEXT NOT NULL DEFAULT 'user'
+            )
+            """
         )
 
-    conn.commit()
-    conn.close()
+        cur.execute("SELECT COUNT(*) FROM users")
+        if cur.fetchone()[0] == 0:
+            cur.execute(
+                "INSERT INTO users (username, password_hash, role) VALUES (%s, %s, %s)",
+                ("admin", hash_password("admin123"), "admin"),
+            )
+
+        conn.commit()
+    finally:
+        if hasattr(cur, "close"):
+            cur.close()
+        if hasattr(conn, "close"):
+            conn.close()
 
 
 def hash_password(password: str) -> str:
@@ -48,10 +52,14 @@ def authenticate_user(username: str, password: str):
     init_db()
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT username, password_hash, role FROM users WHERE username = %s", (username,))
-
-    row = cur.fetchone()
-    conn.close()
+    try:
+        cur.execute("SELECT username, password_hash, role FROM users WHERE username = %s", (username,))
+        row = cur.fetchone()
+    finally:
+        if hasattr(cur, "close"):
+            cur.close()
+        if hasattr(conn, "close"):
+            conn.close()
 
     if not row:
         return {"success": False, "message": "Usuario no encontrado"}
