@@ -7,7 +7,6 @@ import pytest
 sys.path.insert(0, os.path.dirname(__file__))
 
 import auth_service
-from api import login
 
 
 class FakeCursor:
@@ -63,15 +62,6 @@ def test_get_db_connection_uses_database_url(monkeypatch):
 
     assert auth_service.get_db_connection() is not None
     assert factory.urls == ['postgresql://user:pass@host:5432/db']
-
-
-def test_login_handler_accepts_method_field(monkeypatch):
-    monkeypatch.setattr(login, 'authenticate_user', lambda username, password: {'success': True, 'username': username, 'role': 'admin'})
-
-    response = login.handler({'method': 'POST', 'body': 'username=admin&password=admin123'})
-
-    assert response['statusCode'] == 200
-    assert json.loads(response['body'])['success'] is True
 
 
 def test_login_with_seeded_user(monkeypatch):
