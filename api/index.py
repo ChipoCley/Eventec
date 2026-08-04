@@ -2,6 +2,8 @@ import json
 from http import HTTPStatus
 from urllib.parse import parse_qs
 
+import traceback
+
 from auth_service import authenticate_user
 
 
@@ -45,7 +47,8 @@ def handler(event, context=None):
         result = authenticate_user(username, password)
         status_code = HTTPStatus.OK if result.get("success") else HTTPStatus.UNAUTHORIZED
     except Exception as exc:
-        result = {"success": False, "message": f"Login error: {exc}"}
+        error_details = traceback.format_exc()
+        result = {"success": False, "message": f"Login error: {exc}", "debug": error_details}
         status_code = HTTPStatus.INTERNAL_SERVER_ERROR
 
     return {
