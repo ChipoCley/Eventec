@@ -40,8 +40,13 @@ def handler(event, context=None):
 
     username = data.get("username", [""])[0].strip()
     password = data.get("password", [""])[0].strip()
-    result = authenticate_user(username, password)
-    status_code = HTTPStatus.OK if result.get("success") else HTTPStatus.UNAUTHORIZED
+
+    try:
+        result = authenticate_user(username, password)
+        status_code = HTTPStatus.OK if result.get("success") else HTTPStatus.UNAUTHORIZED
+    except Exception as exc:
+        result = {"success": False, "message": f"Login error: {exc}"}
+        status_code = HTTPStatus.INTERNAL_SERVER_ERROR
 
     return {
         "statusCode": status_code,
