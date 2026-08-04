@@ -37,6 +37,9 @@ def init_db():
             )
 
         conn.commit()
+    except Exception as exc:
+        conn.rollback()
+        raise RuntimeError(f"No se pudo inicializar la base de datos: {exc}") from exc
     finally:
         if hasattr(cur, "close"):
             cur.close()
@@ -49,17 +52,20 @@ def hash_password(password: str) -> str:
 
 
 def authenticate_user(username: str, password: str):
-    init_db()
-    conn = get_db_connection()
-    cur = conn.cursor()
     try:
-        cur.execute("SELECT username, password_hash, role FROM users WHERE username = %s", (username,))
-        row = cur.fetchone()
-    finally:
-        if hasattr(cur, "close"):
-            cur.close()
-        if hasattr(conn, "close"):
-            conn.close()
+        init_db()
+        conn = get_db_connection()
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT username, password_hash, role FROM users WHERE username = %s", (username,))
+            row = cur.fetchone()
+        finally:
+            if hasattr(cur, "close"):
+                cur.close()
+            if hasattr(conn, "close"):
+                conn.close()
+    except Exception as exc:
+        return {"success": False, "message": str(exc)}
 
     if not row:
         return {"success": False, "message": "Usuario no encontrado"}

@@ -43,8 +43,9 @@ def handler(event, context=None):
         password = data.get("password", [""])[0].strip()
 
         result = authenticate_user(username, password)
+        status_code = HTTPStatus.OK if result.get("success") else HTTPStatus.UNAUTHORIZED
         return {
-            "statusCode": HTTPStatus.OK,
+            "statusCode": status_code,
             "headers": {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
