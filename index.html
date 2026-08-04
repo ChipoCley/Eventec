@@ -744,6 +744,30 @@
       </div>
     </div>
 
+    <!-- admin usuarios -->
+    <div class="dgrid" id="adminUsersPanel" style="display:none;">
+      <div class="dcard" style="grid-column:1/-1;">
+        <h4>Administración de usuarios</h4>
+        <div style="display:grid; gap:12px; margin-top:12px;">
+          <div style="display:grid; gap:8px; grid-template-columns:repeat(3, minmax(0, 1fr));">
+            <input id="userNameInput" type="text" placeholder="Usuario" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
+            <input id="userPassInput" type="password" placeholder="Contraseña" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
+            <select id="userRoleInput" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
+              <option value="user">user</option>
+              <option value="admin">admin</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button id="createUserBtn" class="btn btn-solid" type="button">Crear usuario</button>
+            <button id="saveUserBtn" class="btn btn-brass" type="button" style="display:none;">Guardar cambios</button>
+            <button id="cancelUserEditBtn" class="btn" type="button" style="display:none;">Cancelar</button>
+          </div>
+          <div id="userMessage" style="font-family:'IBM Plex Mono'; font-size:12px; min-height:18px; color:var(--brass-dim);"></div>
+          <div id="usersTable" style="display:grid; gap:8px; margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- fotos + cronograma -->
     <div class="dgrid">
       <div class="dcard">
@@ -849,12 +873,29 @@
   const loginPass = document.getElementById('loginPass');
   const loginSubmit = document.getElementById('loginSubmit');
   const loginError = document.getElementById('loginError');
+  const createUserBtn = document.getElementById('createUserBtn');
+  const saveUserBtn = document.getElementById('saveUserBtn');
+  const cancelUserEditBtn = document.getElementById('cancelUserEditBtn');
+  const userNameInput = document.getElementById('userNameInput');
+  const userPassInput = document.getElementById('userPassInput');
+  const userRoleInput = document.getElementById('userRoleInput');
+  const userMessage = document.getElementById('userMessage');
+  const usersTable = document.getElementById('usersTable');
   let currentUser = null;
+  let currentUserRole = 'user';
+  let editingUserId = null;
 
   function setPrivateButtonState(isLoggedIn){
     if (!privateBtn) return;
     privateBtn.textContent = isLoggedIn ? 'Logout' : 'Login';
     privateBtn.classList.toggle('logged-in', isLoggedIn);
+  }
+
+  function setAdminPanelVisibility(){
+    const panel = document.getElementById('adminUsersPanel');
+    if (!panel) return;
+    const isAdmin = currentUserRole === 'admin';
+    panel.style.display = isAdmin ? 'block' : 'none';
   }
 
   function togglePrivateAccess(){
@@ -917,10 +958,17 @@
       }
 
       currentUser = data.username;
+      currentUserRole = data.role || 'user';
       clearLoginForm();
       closeGate();
       dash.classList.add('show');
       setPrivateButtonState(true);
+      setAdminPanelVisibility();
+      if (currentUserRole === 'admin') {
+        await loadUsers();
+      } else {
+        if (usersTable) usersTable.innerHTML = '';
+      }
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -937,18 +985,161 @@
 
   function exitDash(){
     dash.classList.remove('show');
+    currentUser = null;
+    currentUserRole = 'user';
     setPrivateButtonState(false);
+    setAdminPanelVisibility();
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
   }
 
+  async function loadUsers(){
+    if (!usersTable || currentUserRole !== 'admin') return;
+    try {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      if (!data.success) {
+        usersTable.innerHTML = '<div style="color:#E4785A;">No se pudieron cargar los usuarios.</div>';
+        return;
+      }
+      const rows = data.users || [];
+      if (!rows.length) {
+        usersTable.innerHTML = '<div style="color:var(--stone);">No hay usuarios aún.</div>';
+        return;
+      }
+      usersTable.innerHTML = rows.map(user => `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 12px; border:1px solid var(--line); background:#fff;">
+          <div>
+            <div style="font-weight:600;">${user.username}</div>
+            <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone);">${user.role}</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn" type="button" onclick="editUser(${user.id}, '${user.username}', '${user.role}')">Editar</button>
+            <button class="btn btn-brass" type="button" onclick="deleteUser(${user.id})">Eliminar</button>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      usersTable.innerHTML = '<div style="color:#E4785A;">No se pudo conectar con la API de usuarios.</div>';
+    }
+  }
+
+  async function createUser(){
+    if (!userNameInput || !userPassInput) return;
+    const username = userNameInput.value.trim();
+    const password = userPassInput.value.trim();
+    const role = userRoleInput ? userRoleInput.value : 'user';
+    if (!username || !password) {
+      if (userMessage) userMessage.textContent = 'Completa usuario y contraseña.';
+      return;
+    }
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, role })
+      });
+      const data = await response.json();
+      if (userMessage) userMessage.textContent = data.message || 'Usuario creado';
+      if (data.success) {
+        userNameInput.value = '';
+        userPassInput.value = '';
+        if (userRoleInput) userRoleInput.value = 'user';
+        await loadUsers();
+      }
+    } catch (error) {
+      if (userMessage) userMessage.textContent = 'No se pudo crear el usuario.';
+    }
+  }
+
+  async function deleteUser(id){
+    if (!id) return;
+    try {
+      const response = await fetch('/api/users', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      const data = await response.json();
+      if (userMessage) userMessage.textContent = data.message || 'Usuario eliminado';
+      if (data.success) await loadUsers();
+    } catch (error) {
+      if (userMessage) userMessage.textContent = 'No se pudo eliminar el usuario.';
+    }
+  }
+
+  function editUser(id, username, role){
+    editingUserId = id;
+    if (userNameInput) userNameInput.value = username;
+    if (userPassInput) userPassInput.value = '';
+    if (userRoleInput) userRoleInput.value = role || 'user';
+    if (createUserBtn) createUserBtn.style.display = 'none';
+    if (saveUserBtn) saveUserBtn.style.display = 'inline-flex';
+    if (cancelUserEditBtn) cancelUserEditBtn.style.display = 'inline-flex';
+    if (userMessage) userMessage.textContent = 'Editando usuario...';
+  }
+
+  async function saveUserEdit(){
+    if (!editingUserId) return;
+    const username = userNameInput ? userNameInput.value.trim() : '';
+    const password = userPassInput ? userPassInput.value.trim() : '';
+    const role = userRoleInput ? userRoleInput.value : 'user';
+    if (!username) {
+      if (userMessage) userMessage.textContent = 'El usuario no puede quedar vacío.';
+      return;
+    }
+    try {
+      const response = await fetch('/api/users', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: editingUserId, username, password, role })
+      });
+      const data = await response.json();
+      if (userMessage) userMessage.textContent = data.message || 'Usuario actualizado';
+      if (data.success) {
+        editingUserId = null;
+        if (createUserBtn) createUserBtn.style.display = 'inline-flex';
+        if (saveUserBtn) saveUserBtn.style.display = 'none';
+        if (cancelUserEditBtn) cancelUserEditBtn.style.display = 'none';
+        if (userNameInput) userNameInput.value = '';
+        if (userPassInput) userPassInput.value = '';
+        if (userRoleInput) userRoleInput.value = 'user';
+        await loadUsers();
+      }
+    } catch (error) {
+      if (userMessage) userMessage.textContent = 'No se pudo actualizar el usuario.';
+    }
+  }
+
+  function cancelUserEdit(){
+    editingUserId = null;
+    if (createUserBtn) createUserBtn.style.display = 'inline-flex';
+    if (saveUserBtn) saveUserBtn.style.display = 'none';
+    if (cancelUserEditBtn) cancelUserEditBtn.style.display = 'none';
+    if (userNameInput) userNameInput.value = '';
+    if (userPassInput) userPassInput.value = '';
+    if (userRoleInput) userRoleInput.value = 'user';
+    if (userMessage) userMessage.textContent = '';
+  }
+
   if (privateBtn) {
     setPrivateButtonState(false);
+    setAdminPanelVisibility();
     privateBtn.addEventListener('click', togglePrivateAccess);
   }
 
   if (loginSubmit) {
     loginSubmit.addEventListener('click', enterDash);
+  }
+
+  if (createUserBtn) {
+    createUserBtn.addEventListener('click', createUser);
+  }
+  if (saveUserBtn) {
+    saveUserBtn.addEventListener('click', saveUserEdit);
+  }
+  if (cancelUserEditBtn) {
+    cancelUserEditBtn.addEventListener('click', cancelUserEdit);
   }
 
   const apartmentCards = document.querySelectorAll('.apt-card');
