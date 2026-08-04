@@ -1030,7 +1030,10 @@
     const password = userPassInput.value.trim();
     const role = userRoleInput ? userRoleInput.value : 'user';
     if (!username || !password) {
-      if (userMessage) userMessage.textContent = 'Completa usuario y contraseña.';
+      if (userMessage) {
+        userMessage.textContent = 'Completa usuario y contraseña.';
+        userMessage.style.color = '#E4785A';
+      }
       return;
     }
     try {
@@ -1040,7 +1043,10 @@
         body: JSON.stringify({ username, password, role })
       });
       const data = await response.json();
-      if (userMessage) userMessage.textContent = data.message || 'Usuario creado';
+      if (userMessage) {
+        userMessage.textContent = data.message || 'Usuario creado';
+        userMessage.style.color = data.success ? '#2e7d32' : '#E4785A';
+      }
       if (data.success) {
         userNameInput.value = '';
         userPassInput.value = '';
@@ -1048,7 +1054,10 @@
         await loadUsers();
       }
     } catch (error) {
-      if (userMessage) userMessage.textContent = 'No se pudo crear el usuario.';
+      if (userMessage) {
+        userMessage.textContent = 'No se pudo crear el usuario.';
+        userMessage.style.color = '#E4785A';
+      }
     }
   }
 
@@ -1061,10 +1070,16 @@
         body: JSON.stringify({ id })
       });
       const data = await response.json();
-      if (userMessage) userMessage.textContent = data.message || 'Usuario eliminado';
+      if (userMessage) {
+        userMessage.textContent = data.message || 'Usuario eliminado';
+        userMessage.style.color = data.success ? '#2e7d32' : '#E4785A';
+      }
       if (data.success) await loadUsers();
     } catch (error) {
-      if (userMessage) userMessage.textContent = 'No se pudo eliminar el usuario.';
+      if (userMessage) {
+        userMessage.textContent = 'No se pudo eliminar el usuario.';
+        userMessage.style.color = '#E4785A';
+      }
     }
   }
 
@@ -1085,7 +1100,10 @@
     const password = userPassInput ? userPassInput.value.trim() : '';
     const role = userRoleInput ? userRoleInput.value : 'user';
     if (!username) {
-      if (userMessage) userMessage.textContent = 'El usuario no puede quedar vacío.';
+      if (userMessage) {
+        userMessage.textContent = 'El usuario no puede quedar vacío.';
+        userMessage.style.color = '#E4785A';
+      }
       return;
     }
     try {
@@ -1095,7 +1113,10 @@
         body: JSON.stringify({ id: editingUserId, username, password, role })
       });
       const data = await response.json();
-      if (userMessage) userMessage.textContent = data.message || 'Usuario actualizado';
+      if (userMessage) {
+        userMessage.textContent = data.message || 'Usuario actualizado';
+        userMessage.style.color = data.success ? '#2e7d32' : '#E4785A';
+      }
       if (data.success) {
         editingUserId = null;
         if (createUserBtn) createUserBtn.style.display = 'inline-flex';
@@ -1107,7 +1128,10 @@
         await loadUsers();
       }
     } catch (error) {
-      if (userMessage) userMessage.textContent = 'No se pudo actualizar el usuario.';
+      if (userMessage) {
+        userMessage.textContent = 'No se pudo actualizar el usuario.';
+        userMessage.style.color = '#E4785A';
+      }
     }
   }
 
@@ -1119,7 +1143,10 @@
     if (userNameInput) userNameInput.value = '';
     if (userPassInput) userPassInput.value = '';
     if (userRoleInput) userRoleInput.value = 'user';
-    if (userMessage) userMessage.textContent = '';
+    if (userMessage) {
+      userMessage.textContent = '';
+      userMessage.style.color = 'var(--brass-dim)';
+    }
   }
 
   if (privateBtn) {

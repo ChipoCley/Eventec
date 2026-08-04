@@ -54,7 +54,7 @@ module.exports = async function handler(req, res) {
           return;
         }
         await client.query('INSERT INTO users (username, password_hash, role) VALUES ($1, $2, $3)', [username, hashPassword(password), role]);
-        res.status(200).json({ success: true, message: 'Usuario creado' });
+        res.status(200).json({ success: true, message: `Usuario agregado correctamente: ${username}` });
         return;
       }
 
@@ -72,7 +72,7 @@ module.exports = async function handler(req, res) {
         } else {
           await client.query('UPDATE users SET username = $1, role = $2 WHERE id = $3', [username, role, id]);
         }
-        res.status(200).json({ success: true, message: 'Usuario actualizado' });
+        res.status(200).json({ success: true, message: `Usuario actualizado correctamente: ${username}` });
         return;
       }
 
@@ -83,7 +83,7 @@ module.exports = async function handler(req, res) {
           return;
         }
         await client.query('DELETE FROM users WHERE id = $1', [id]);
-        res.status(200).json({ success: true, message: 'Usuario eliminado' });
+        res.status(200).json({ success: true, message: 'Usuario eliminado correctamente' });
       }
     });
   } catch (error) {
