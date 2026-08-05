@@ -201,11 +201,14 @@
   #locationMapEmbed{display:block; width:100%; height:100%; min-height:420px; border:0; background:#dbeaf2;}
   .loc-map::after{content:"       ◎ TORRE A CD. GRANJA — ZAPOPAN, JAL."; position:absolute; bottom:20px; left:20px; font-size:11px; z-index:500; color:var(--ink); background:rgba(243,239,231,.82); padding:6px 10px; border:1px solid rgba(20,21,26,.12); font-family:'IBM Plex Mono',monospace; text-transform:uppercase;}
   .loc-list{background:#fff;}
-  .loc-row{display:flex; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid var(--line); font-size:14px; cursor:pointer; transition:background .18s ease;}
+  .loc-row{display:flex; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid var(--line); font-size:14px; cursor:pointer; transition:background .18s ease; align-items:center;}
   .loc-row:hover{background:#faf7f0;}
-  .loc-row .d{font-family:'IBM Plex Mono',monospace; color:var(--brass-dim); font-size:12.5px;}
+  .loc-row .loc-name{display:flex; flex-direction:column; gap:4px;}
+  .loc-row .loc-name strong{font-weight:600; color:var(--ink);}
+  .loc-row .loc-name span{font-size:12px; color:var(--stone);}
+  .loc-row .d{font-family:'IBM Plex Mono',monospace; color:var(--brass-dim); font-size:12.5px; white-space:nowrap; text-align:right;}
   .loc-legend{display:flex; align-items:center; gap:8px; margin-top:10px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--stone); text-transform:uppercase; letter-spacing:.04em;}
-  .loc-dot{width:10px; height:10px; border-radius:50%; background:var(--brass); display:inline-block;}
+  .loc-dot{width:10px; height:10px; border-radius:50%; background:var(--brass); display:inline-block; box-shadow:0 0 0 4px rgba(192,138,62,.16);}
   .loc-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;}
   .loc-actions .btn{padding:12px 16px;}
   @media (max-width:900px){ .loc-wrap{grid-template-columns:1fr;} }
@@ -526,13 +529,13 @@
     </div>
     <div class="loc-wrap">
       <div class="loc-list">
-        <div class="loc-row" data-query="Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco" data-title="Calzada Central" data-desc="Dirección del proyecto"><span>Calzada Central 261</span><span class="d">Ubicación del proyecto</span></div>
-        <div class="loc-row" data-query="Parque+Ciudad+Granja+Zapopan+Jalisco" data-title="Parque de la colonia" data-desc="6 min caminando"><span>Parque de la colonia</span><span class="d">6 min caminando</span></div>
-        <div class="loc-row" data-query="Escuela+primaria+Ciudad+Granja+Zapopan+Jalisco" data-title="Escuela primaria" data-desc="7 min caminando"><span>Escuela primaria</span><span class="d">7 min caminando</span></div>
-        <div class="loc-row" data-query="Mini+super+Ciudad+Granja+Zapopan+Jalisco" data-title="Mini súper" data-desc="3 min caminando"><span>Mini súper</span><span class="d">3 min caminando</span></div>
-        <div class="loc-row" data-query="Farmacia+Ciudad+Granja+Zapopan+Jalisco" data-title="Farmacia" data-desc="5 min en auto"><span>Farmacia</span><span class="d">5 min en auto</span></div>
-        <div class="loc-row" data-query="Transporte+público+Ciudad+Granja+Zapopan+Jalisco" data-title="Transporte público" data-desc="4 min caminando"><span>Transporte público</span><span class="d">4 min caminando</span></div>
-        <div class="loc-row" data-query="Centro+comercial+Ciudad+Granja+Zapopan+Jalisco" data-title="Centro comercial" data-desc="10 min en auto"><span>Centro comercial</span><span class="d">10 min en auto</span></div>
+        <div class="loc-row" data-query="Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco" data-title="Calzada Central" data-desc="Dirección del proyecto"><div class="loc-name"><strong>Calzada Central 261</strong><span>Ubicación del proyecto</span></div><span class="d">Proyecto</span></div>
+        <div class="loc-row" data-query="UVM+Zapopan+Jalisco" data-title="UVM Zapopan" data-desc="Campus cercano a la torre"><div class="loc-name"><strong>UVM</strong><span>Campus Zapopan</span></div><span class="d">8 min</span></div>
+        <div class="loc-row" data-query="Estadio+Akron+Zapopan+Jalisco" data-title="Estadio Akron" data-desc="Principal recinto deportivo de la zona"><div class="loc-name"><strong>Estadio Akron</strong><span>Eventos y fútbol</span></div><span class="d">12 min</span></div>
+        <div class="loc-row" data-query="Andares+Zapopan+Jalisco" data-title="Andares" data-desc="Centro comercial de alto nivel"><div class="loc-name"><strong>Andares</strong><span>Centro comercial</span></div><span class="d">10 min</span></div>
+        <div class="loc-row" data-query="Metropolitano+Zapopan+Jalisco" data-title="Metropolitano" data-desc="Área de entretenimiento y comercios"><div class="loc-name"><strong>El Metropolitano</strong><span>Entretenimiento y gastronomía</span></div><span class="d">11 min</span></div>
+        <div class="loc-row" data-query="Macroplaza+Zapopan+Jalisco" data-title="Macroplaza" data-desc="Zona de movilidad y servicios"><div class="loc-name"><strong>Macroplaza</strong><span>Accesos y servicios</span></div><span class="d">9 min</span></div>
+        <div class="loc-row" data-query="Macro+Periferico+Zapopan+Jalisco" data-title="Estación de Macroperiférico" data-desc="Vínculo con movilidad rápida"><div class="loc-name"><strong>Estación Macroperiférico</strong><span>Acceso a transporte y vialidades</span></div><span class="d">7 min</span></div>
       </div>
       <div class="loc-map">
         <iframe id="locationMapEmbed" title="Mapa de ubicación" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco&z=16&output=embed"></iframe>
