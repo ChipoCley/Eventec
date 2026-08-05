@@ -66,27 +66,37 @@ if (contactForm) {
 }
 
 function initLocationMap() {
-
-    const mapFrame = document.getElementById('locationMapEmbed');
+    const mapFrame = document.getElementById("locationMapEmbed");
 
     if (!mapFrame) return;
 
-    // Torre A
+    // Ubicación del proyecto (origen de las rutas)
     const origin = "Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco";
+
+    // Mostrar inicialmente la ubicación del proyecto
+    mapFrame.src = `https://www.google.com/maps?q=${origin}&z=17&output=embed`;
 
     document.querySelectorAll(".loc-row").forEach(row => {
 
         row.addEventListener("click", () => {
 
-            const destination = row.dataset.destination || origin;
+            const query = row.dataset.query;
+            const destination = row.dataset.destination;
 
-            mapFrame.src =
-                `https://www.google.com/maps?saddr=${origin}&daddr=${destination}&output=embed`;
+            // Si tiene data-query, solo muestra la ubicación
+            if (query) {
+                mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=17&output=embed`;
+                return;
+            }
+
+            // Si tiene data-destination, muestra la ruta
+            if (destination) {
+                mapFrame.src = `https://www.google.com/maps?saddr=${encodeURIComponent(origin)}&daddr=${encodeURIComponent(destination)}&output=embed`;
+            }
 
         });
 
     });
-
 }
 
 window.addEventListener('DOMContentLoaded', initLocationMap);
