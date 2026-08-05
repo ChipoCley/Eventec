@@ -744,36 +744,6 @@
       </div>
     </div>
 
-    <!-- admin usuarios -->
-    <div class="dgrid" id="adminUsersPanel" style="display:none;">
-      <div class="dcard" style="grid-column:1/-1; background:linear-gradient(135deg, rgba(185,203,169,.10), rgba(255,255,255,.02)); border:1px solid rgba(185,203,169,.18);">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-          <div>
-            <div class="eyebrow">Acceso interno</div>
-            <h4 style="margin:0;">Administración de usuarios</h4>
-          </div>
-          <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone);">Gestión de credenciales y roles</div>
-        </div>
-        <div style="display:grid; gap:12px;">
-          <div style="display:grid; gap:8px; grid-template-columns:repeat(3, minmax(0, 1fr));">
-            <input id="userNameInput" type="text" placeholder="Usuario" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
-            <input id="userPassInput" type="password" placeholder="Contraseña" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
-            <select id="userRoleInput" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
-              <option value="user">usuario</option>
-              <option value="admin">admin</option>
-            </select>
-          </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button id="createUserBtn" class="btn btn-solid" type="button">Crear usuario</button>
-            <button id="saveUserBtn" class="btn btn-brass" type="button" style="display:none;">Guardar cambios</button>
-            <button id="cancelUserEditBtn" class="btn" type="button" style="display:none;">Cancelar</button>
-          </div>
-          <div id="userMessage" style="font-family:'IBM Plex Mono'; font-size:12px; min-height:18px; color:var(--brass-dim); padding:8px 10px; background:rgba(255,255,255,.6); border:1px solid rgba(185,203,169,.16); border-radius:8px;"></div>
-          <div id="usersTable" style="display:grid; gap:8px; margin-top:2px;"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- fotos + cronograma -->
     <div class="dgrid">
       <div class="dcard">
@@ -838,6 +808,36 @@
       <div class="fincard"><div class="flbl">Fase 1 · Preventa</div><div class="fval">Ejemplo</div></div>
       <div class="fincard"><div class="flbl">Fase 2 · Construcción</div><div class="fval">Ejemplo</div></div>
       <div class="fincard"><div class="flbl">Fase 3 · Entrega</div><div class="fval">Ejemplo</div></div>
+    </div>
+
+    <!-- admin usuarios -->
+    <div class="dhead" style="margin-top:44px;">
+      <div class="eyebrow">Acceso interno</div>
+      <h2 style="font-size:28px;">Administración de usuarios</h2>
+    </div>
+    <div class="dgrid" id="adminUsersPanel" style="display:none; margin-top:10px;">
+      <div class="dcard" style="grid-column:1/-1; background:linear-gradient(135deg, rgba(185,203,169,.10), rgba(255,255,255,.02)); border:1px solid rgba(185,203,169,.18);">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
+          <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone);">Gestión de credenciales y roles</div>
+        </div>
+        <div style="display:grid; gap:12px;">
+          <div style="display:grid; gap:8px; grid-template-columns:repeat(3, minmax(0, 1fr));">
+            <input id="userNameInput" type="text" placeholder="Usuario" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+            <input id="userPassInput" type="password" placeholder="Contraseña" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+            <select id="userRoleInput" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+              <option value="user">usuario</option>
+              <option value="admin">admin</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button id="createUserBtn" class="btn btn-solid" type="button">Crear usuario</button>
+            <button id="saveUserBtn" class="btn btn-brass" type="button" style="display:none;">Guardar cambios</button>
+            <button id="cancelUserEditBtn" class="btn" type="button" style="display:none;">Cancelar</button>
+          </div>
+          <div id="userMessage" style="font-family:'IBM Plex Mono'; font-size:12px; min-height:18px; color:var(--brass-dim); padding:8px 10px; background:rgba(255,255,255,.6); border:1px solid rgba(185,203,169,.16); border-radius:8px;"></div>
+          <div id="usersTable" style="display:grid; gap:8px; margin-top:2px;"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
