@@ -66,31 +66,26 @@ if (contactForm) {
 }
 
 function initLocationMap() {
-  const mapFrame = document.getElementById('locationMapEmbed');
 
-  if (!mapFrame) return;
+    const mapFrame = document.getElementById('locationMapEmbed');
 
-  // Coordenadas de Torre A (cámbialas por las reales)
-  const origin = "20.705130,-103.413850";
+    if (!mapFrame) return;
 
-  // Ruta por defecto
-  const defaultDestination = "Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco";
+    // Torre A
+    const origin = "Calzada+Central+261+Ciudad+Granja+Zapopan+Jalisco";
 
-  mapFrame.src =
-    `https://www.google.com/maps?saddr=${origin}&daddr=${defaultDestination}&output=embed`;
+    document.querySelectorAll(".loc-row").forEach(row => {
 
-  document.querySelectorAll(".loc-row").forEach((row) => {
+        row.addEventListener("click", () => {
 
-    row.addEventListener("click", () => {
+            const destination = row.dataset.destination || origin;
 
-      const destination = row.dataset.destination || defaultDestination;
+            mapFrame.src =
+                `https://www.google.com/maps?saddr=${origin}&daddr=${destination}&output=embed`;
 
-      mapFrame.src =
-        `https://www.google.com/maps?saddr=${origin}&daddr=${destination}&output=embed`;
+        });
 
     });
-
-  });
 
 }
 
