@@ -746,14 +746,20 @@
 
     <!-- admin usuarios -->
     <div class="dgrid" id="adminUsersPanel" style="display:none;">
-      <div class="dcard" style="grid-column:1/-1;">
-        <h4>Administración de usuarios</h4>
-        <div style="display:grid; gap:12px; margin-top:12px;">
+      <div class="dcard" style="grid-column:1/-1; background:linear-gradient(135deg, rgba(185,203,169,.10), rgba(255,255,255,.02)); border:1px solid rgba(185,203,169,.18);">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
+          <div>
+            <div class="eyebrow">Acceso interno</div>
+            <h4 style="margin:0;">Administración de usuarios</h4>
+          </div>
+          <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone);">Gestión de credenciales y roles</div>
+        </div>
+        <div style="display:grid; gap:12px;">
           <div style="display:grid; gap:8px; grid-template-columns:repeat(3, minmax(0, 1fr));">
-            <input id="userNameInput" type="text" placeholder="Usuario" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
-            <input id="userPassInput" type="password" placeholder="Contraseña" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
-            <select id="userRoleInput" style="padding:10px 12px; border:1px solid var(--line); background:#fff;">
-              <option value="user">user</option>
+            <input id="userNameInput" type="text" placeholder="Usuario" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+            <input id="userPassInput" type="password" placeholder="Contraseña" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+            <select id="userRoleInput" style="padding:10px 12px; border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:8px; font:inherit;">
+              <option value="user">usuario</option>
               <option value="admin">admin</option>
             </select>
           </div>
@@ -762,8 +768,8 @@
             <button id="saveUserBtn" class="btn btn-brass" type="button" style="display:none;">Guardar cambios</button>
             <button id="cancelUserEditBtn" class="btn" type="button" style="display:none;">Cancelar</button>
           </div>
-          <div id="userMessage" style="font-family:'IBM Plex Mono'; font-size:12px; min-height:18px; color:var(--brass-dim);"></div>
-          <div id="usersTable" style="display:grid; gap:8px; margin-top:6px;"></div>
+          <div id="userMessage" style="font-family:'IBM Plex Mono'; font-size:12px; min-height:18px; color:var(--brass-dim); padding:8px 10px; background:rgba(255,255,255,.6); border:1px solid rgba(185,203,169,.16); border-radius:8px;"></div>
+          <div id="usersTable" style="display:grid; gap:8px; margin-top:2px;"></div>
         </div>
       </div>
     </div>
@@ -1008,10 +1014,10 @@
         return;
       }
       usersTable.innerHTML = rows.map(user => `
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 12px; border:1px solid var(--line); background:#fff;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 14px; border:1px solid rgba(185,203,169,.16); background:rgba(255,255,255,.8); border-radius:10px; box-shadow:0 8px 18px rgba(11,18,27,.04);">
           <div>
-            <div style="font-weight:600;">${user.username}</div>
-            <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone);">${user.role}</div>
+            <div style="font-weight:600; color:var(--ink);">${user.username}</div>
+            <div style="font-family:'IBM Plex Mono'; font-size:11px; color:var(--stone); text-transform:capitalize;">${user.role}</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="btn" type="button" onclick="editUser(${user.id}, '${user.username}', '${user.role}')">Editar</button>
