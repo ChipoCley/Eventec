@@ -18,6 +18,8 @@
   --green:#070a12;
   --green-2:#111726;
   --mint:#D9B44C;           /* Dorado */
+  --metal-border:linear-gradient(135deg, #FBEFC4 0%, #D9B44C 32%, #83621F 52%, #F0D488 74%, #D9B44C 100%);
+  --glow:0 0 1px rgba(247,230,166,.9), 0 0 14px rgba(217,180,76,.45), 0 0 34px rgba(217,180,76,.18);
 }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -109,8 +111,8 @@
   .hero-stat .lbl{font-size:12px; color:rgba(255,255,255,.65); margin-top:4px;}
   @media (max-width:760px){ .hero-stats{grid-template-columns:repeat(2,1fr);} .hero-stat{border-bottom:1px solid var(--line);} }
   .hero-cta{display:flex; gap:14px; margin:36px 32px 60px; flex-wrap:wrap;}
-  #hero .btn-solid{background:var(--brass); color:var(--ink); border-color:var(--brass);}
-  #hero .btn-solid:hover{background:var(--brass-dim); border-color:var(--brass-dim); color:var(--ink);}
+  #hero .btn-solid{background:var(--brass); color:var(--ink); border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
+  #hero .btn-solid:hover{background:var(--brass-dim); border-image:var(--metal-border) 1; color:var(--ink);}
   #hero .btn-brass{border-color:rgba(217,180,76,.55); color:#fff;}
   #hero .btn-brass:hover{background:var(--brass); border-color:var(--brass); color:var(--ink);}
 
@@ -133,7 +135,7 @@
 
   /* programa */
   .prog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
-  .prog-card{background:var(--paper-2); padding:30px;}
+  .prog-card{background:var(--paper-2); padding:30px; border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
   .prog-card .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--brass-dim); letter-spacing:.08em;}
   .prog-card h4{font-size:18px; margin:10px 0 14px;}
   .prog-card ul{list-style:none; font-size:14px; color:var(--stone); line-height:1.9;}
@@ -141,8 +143,8 @@
 
   /* departamentos */
   .apt-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
-  .apt-card{border:1px solid var(--line); padding:30px; background:var(--paper-2); display:flex; flex-direction:column; gap:18px;}
-  .apt-visual{position:relative; background:var(--ink); border:1px solid var(--line); padding:8px; min-height:220px; display:flex; align-items:center; justify-content:center;}
+  .apt-card{border:2px solid transparent; border-image:var(--metal-border) 1; padding:30px; background:var(--paper-2); display:flex; flex-direction:column; gap:18px; box-shadow:var(--glow);}
+  .apt-visual{position:relative; background:var(--ink); border:2px solid transparent; border-image:var(--metal-border) 1; padding:8px; min-height:220px; display:flex; align-items:center; justify-content:center;}
   .apt-visual img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:1px solid rgba(217,180,76,.15); background:var(--ink); cursor:pointer;}
   .apt-card h4{font-size:20px;}
   .apt-card .meta{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--brass-dim); margin:0 0 14px;}
@@ -152,7 +154,7 @@
   /* modal de detalle de tipos */
   #aptModal{position:fixed; inset:0; background:rgba(20,21,26,.72); backdrop-filter:blur(3px); z-index:120; display:none; align-items:center; justify-content:center; padding:24px;}
   #aptModal.show{display:flex;}
-  .apt-modal-box{background:var(--paper-2); color:var(--paper); width:min(760px, 92vw); max-height:88vh; overflow:auto; padding:28px; border:1px solid var(--brass); box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  .apt-modal-box{background:var(--paper-2); color:var(--paper); width:min(760px, 92vw); max-height:88vh; overflow:auto; padding:28px; border:3px solid transparent; border-image:var(--metal-border) 1; box-shadow:0 24px 70px rgba(0,0,0,.55), var(--glow);}
   .apt-modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:18px;}
   .apt-modal-head h3{font-size:28px; margin-bottom:6px;}
   .apt-modal-head p{font-size:14px; color:var(--stone); line-height:1.6;}
@@ -165,14 +167,14 @@
   .apt-modal-side img, .apt-modal-gallery button img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:none; background:var(--ink);}
   .apt-modal-note{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; color:var(--brass-dim); text-transform:uppercase; margin-bottom:12px;}
   .apt-modal-meta{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:4px;}
-  .apt-modal-meta .item{padding:14px; border:1px solid var(--line); background:var(--ink);}
+  .apt-modal-meta .item{padding:14px; border:2px solid transparent; border-image:var(--metal-border) 1; background:var(--ink);}
   .apt-modal-meta .item .lbl{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; color:var(--stone); text-transform:uppercase; margin-bottom:6px;}
   .apt-modal-meta .item .val{font-size:15px; color:var(--paper);}
   .apt-modal-actions{display:flex; gap:12px; justify-content:flex-end; margin-top:18px; flex-wrap:wrap;}
 
   #aptPreviewModal{position:fixed; inset:0; background:rgba(20,21,26,.82); backdrop-filter:blur(4px); z-index:130; display:none; align-items:center; justify-content:center; padding:24px;}
   #aptPreviewModal.show{display:flex;}
-  .apt-preview-box{background:var(--paper-2); border:1px solid var(--brass); width:min(900px, 94vw); padding:16px;}
+  .apt-preview-box{background:var(--paper-2); border:3px solid transparent; border-image:var(--metal-border) 1; width:min(900px, 94vw); padding:16px; box-shadow:var(--glow);}
   .apt-preview-box img{width:100%; max-height:78vh; object-fit:contain; display:block; background:var(--ink);}
   @media (max-width:760px){ .apt-modal-layout{grid-template-columns:1fr;} .apt-modal-meta{grid-template-columns:1fr;} }
 
@@ -188,7 +190,7 @@
 
   /* videos */
   .vid-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .vid-card{background:var(--ink); border:1px solid var(--line); overflow:hidden;}
+  .vid-card{background:var(--ink); border:2px solid transparent; border-image:var(--metal-border) 1; overflow:hidden; box-shadow:var(--glow);}
   .vid-card video{width:100%; aspect-ratio:16/10; object-fit:cover; display:block; background:var(--ink);}
   .vid-card .vcap{padding:14px 16px; display:flex; justify-content:space-between; align-items:center;}
   .vid-card .vcap span{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.04em; color:var(--stone);}
@@ -197,10 +199,10 @@
 
   /* ubicacion */
   .loc-wrap{display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); border:1px solid var(--line); align-items:stretch;}
-  .loc-map{background:var(--paper-2); min-height:420px; height:100%; position:relative; overflow:hidden;}
+  .loc-map{background:var(--paper-2); min-height:420px; height:100%; position:relative; overflow:hidden; border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
   #locationMapEmbed{display:block; width:100%; height:100%; min-height:420px; border:0; background:var(--ink);}
   .loc-map::after{content:"       ◎ TORRE A CD. GRANJA — ZAPOPAN, JAL."; position:absolute; bottom:20px; left:20px; font-size:11px; z-index:500; color:var(--brass); background:rgba(6,9,16,.85); padding:6px 10px; border:1px solid rgba(217,180,76,.3); font-family:'IBM Plex Mono',monospace; text-transform:uppercase;}
-  .loc-list{background:var(--paper-2);}
+  .loc-list{background:var(--paper-2); border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
   .loc-row{display:flex; justify-content:space-between; gap:12px; padding:16px 22px; border-bottom:1px solid var(--line); font-size:14px; cursor:pointer; transition:background .18s ease; align-items:center;}
   .loc-row:hover{background:rgba(217,180,76,.08);}
   .loc-row .loc-name{display:flex; flex-direction:column; gap:4px;}
@@ -243,7 +245,7 @@
     display:none; align-items:center; justify-content:center; padding:24px;
   }
   #contactSuccess.show{display:flex;}
-  #contactSuccessBox{background:var(--paper-2); color:var(--paper); width:min(420px,92vw); padding:32px; border:1px solid var(--brass); box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  #contactSuccessBox{background:var(--paper-2); color:var(--paper); width:min(420px,92vw); padding:32px; border:3px solid transparent; border-image:var(--metal-border) 1; box-shadow:0 24px 70px rgba(0,0,0,.55), var(--glow);}
   #contactSuccessBox h3{font-size:24px; margin:8px 0 10px;}
   #contactSuccessBox p{font-size:14px; line-height:1.65; color:var(--stone); margin-bottom:18px;}
 
@@ -253,7 +255,7 @@
     display:none; align-items:center; justify-content:center;
   }
   #gate.show{display:flex;}
-  #gateBox{background:var(--ink); color:var(--paper); width:min(420px,92vw); padding:42px; border:1px solid var(--brass);}
+  #gateBox{background:var(--ink); color:var(--paper); width:min(420px,92vw); padding:42px; border:3px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
   #gateBox .eyebrow{color:var(--brass);}
   #gateBox h3{font-size:24px; margin:6px 0 10px;}
   #gateBox p{color:#B7AF9A; font-size:13.5px; margin-bottom:26px; line-height:1.6;}
