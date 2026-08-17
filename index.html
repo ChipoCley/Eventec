@@ -1328,7 +1328,7 @@
       button.setAttribute('aria-label', `${type} - vista ${index + 1}`);
       const img = document.createElement('img');
       img.src = src;
-      img.alt = `${type} - vista ${index + 10}`;
+      img.alt = `${type} - vista ${index + 1}`;
       button.appendChild(img);
       button.addEventListener('click', () => {
         if (aptPreviewImage) {
@@ -1366,7 +1366,7 @@
       if (!slide || !images.length) return;
       activeIndex = (index + images.length) % images.length;
       slide.src = images[activeIndex];
-      slide.alt = `${card.dataset.type || 'Tipo'} - vista ${activeIndex + 1}`;
+      slide.alt = `${card.dataset.type || 'Tipo'} - vista ${activeIndex + 10}`;
     }
 
     function startAutoRotate() {
