@@ -290,8 +290,18 @@
   .stage{display:flex; align-items:center; gap:14px; margin-bottom:16px; font-size:13px;}
   .stage .sname{width:120px; flex-shrink:0; color:var(--paper);}
   .stage .sbar{flex:1; height:7px; background:rgba(196,163,74,.15); position:relative; border-radius:2px; overflow:hidden;}
-  .stage .sbar i{position:absolute; left:0; top:0; bottom:0; background:var(--mint); border-radius:2px;}
+  .stage .sbar i{position:absolute; left:0; top:0; bottom:0; background:var(--mint); border-radius:2px; transition:width .35s ease;}
   .stage .spct{width:40px; text-align:right; font-family:'IBM Plex Mono'; color:var(--mint);}
+  .stage .sctrl{display:flex; align-items:center; gap:4px; flex-shrink:0;}
+  .stage .sctrl button{
+    width:22px; height:22px; border-radius:5px; border:1px solid rgba(196,163,74,.35);
+    background:transparent; color:var(--mint); font-family:'IBM Plex Mono'; font-size:13px;
+    line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:.15s ease;
+  }
+  .stage .sctrl button:hover{background:rgba(196,163,74,.18); border-color:var(--mint);}
+  .stage .sctrl button:disabled{opacity:.3; cursor:not-allowed;}
+  #stageSavedNote{font-family:'IBM Plex Mono'; font-size:11px; color:var(--brass-dim); min-height:16px; margin-top:4px;}
 
   .scurve{width:100%; height:190px;}
 
@@ -702,12 +712,9 @@
     <!-- avance + curva S -->
     <div class="dgrid">
       <div class="dcard">
-        <h4><span><span class="live-dot"></span>Avance por etapa</span><span>Actualizado hoy</span></h4>
-        <div class="stage"><span class="sname">Cimentación</span><div class="sbar"><i style="width:100%"></i></div><span class="spct">100%</span></div>
-        <div class="stage"><span class="sname">Estructura</span><div class="sbar"><i style="width:64%"></i></div><span class="spct">64%</span></div>
-        <div class="stage"><span class="sname">Instalaciones</span><div class="sbar"><i style="width:28%"></i></div><span class="spct">28%</span></div>
-        <div class="stage"><span class="sname">Fachada</span><div class="sbar"><i style="width:10%"></i></div><span class="spct">10%</span></div>
-        <div class="stage"><span class="sname">Terminaciones</span><div class="sbar"><i style="width:0%"></i></div><span class="spct">0%</span></div>
+        <h4><span><span class="live-dot"></span>Avance por etapa</span><span id="stageUpdatedLbl">Actualizado hoy</span></h4>
+        <div id="stageList"></div>
+        <div id="stageSavedNote"></div>
       </div>
       <div class="dcard">
         <h4>Cámara en obra</h4>
@@ -718,12 +725,12 @@
     <!-- curva S -->
     <div class="dgrid">
       <div class="dcard" style="grid-column:1/-1;">
-        <h4>Curva S · real vs. planificada</h4>
+        <h4>Curva S · real vs. planificada<span id="scurvePctLbl" style="font-family:'IBM Plex Mono'; font-size:11px; color:#B9CBA9; text-transform:none;"></span></h4>
         <svg class="scurve" viewBox="0 0 600 190" preserveAspectRatio="none">
           <line x1="0" y1="190" x2="600" y2="190" stroke="rgba(196,163,74,.2)"/>
           <path d="M0,180 C150,170 250,90 350,40 C450,10 550,2 600,0" fill="none" stroke="rgba(196,163,74,.4)" stroke-width="2" stroke-dasharray="5,5"/>
-          <path d="M0,180 C150,175 250,120 330,70 C400,45 460,38 470,36" fill="none" stroke="#B9CBA9" stroke-width="2.5"/>
-          <circle cx="470" cy="36" r="4.5" fill="#B9CBA9"/>
+          <path id="realCurvePath" d="M0,180 C150,175 250,120 330,70 C400,45 460,38 470,36" fill="none" stroke="#B9CBA9" stroke-width="2.5"/>
+          <circle id="realCurveDot" cx="470" cy="36" r="4.5" fill="#B9CBA9"/>
         </svg>
         <div style="display:flex; gap:22px; margin-top:8px; font-family:'IBM Plex Mono'; font-size:11px; color:rgba(196,163,74,.7);">
           <span>— Real</span><span style="opacity:.6;">┄ Planificada</span>
@@ -864,6 +871,121 @@
   let currentUserRole = 'user';
   let editingUserId = null;
 
+  // ---------- avance por etapa + curva S ----------
+  const STAGE_STORAGE_KEY = 'torreA_stageProgress';
+  let stageProgress = [
+    { id:'cimentacion',    name:'Cimentación',    pct:100 },
+    { id:'estructura',     name:'Estructura',     pct:64 },
+    { id:'instalaciones',  name:'Instalaciones',  pct:28 },
+    { id:'fachada',        name:'Fachada',        pct:10 },
+    { id:'terminaciones',  name:'Terminaciones',  pct:0 }
+  ];
+  let stageProgressPoll = null;
+
+  function renderStages(){
+    const list = document.getElementById('stageList');
+    if (!list) return;
+    const isAdmin = currentUserRole === 'admin';
+    list.innerHTML = stageProgress.map(s => `
+      <div class="stage">
+        <span class="sname">${s.name}</span>
+        <div class="sbar"><i style="width:${s.pct}%"></i></div>
+        <span class="spct">${s.pct}%</span>
+        ${isAdmin ? `
+          <div class="sctrl">
+            <button type="button" onclick="stepStage('${s.id}',-1)" ${s.pct <= 0 ? 'disabled' : ''} aria-label="Reducir ${s.name}">−</button>
+            <button type="button" onclick="stepStage('${s.id}',1)" ${s.pct >= 100 ? 'disabled' : ''} aria-label="Incrementar ${s.name}">+</button>
+          </div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function computeOverallProgress(){
+    if (!stageProgress.length) return 0;
+    return stageProgress.reduce((sum, s) => sum + s.pct, 0) / stageProgress.length;
+  }
+
+  function updateSCurve(){
+    const pct = Math.max(0, Math.min(100, computeOverallProgress()));
+    const path = document.getElementById('realCurvePath');
+    const dot = document.getElementById('realCurveDot');
+    const lbl = document.getElementById('scurvePctLbl');
+    if (!path || !dot) return;
+    const w = 600, h = 190;
+    const ex = (pct / 100) * w;
+    const ey = h - (pct / 100) * h;
+    const c1x = ex * 0.32, c1y = h - (h - ey) * 0.12;
+    const c2x = ex * 0.72, c2y = ey + (h - ey) * 0.28;
+    const d = `M0,${(h - 10).toFixed(1)} C${c1x.toFixed(1)},${(h - 15).toFixed(1)} ${c2x.toFixed(1)},${c1y.toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`;
+    path.setAttribute('d', d);
+    dot.setAttribute('cx', ex.toFixed(1));
+    dot.setAttribute('cy', ey.toFixed(1));
+    if (lbl) lbl.textContent = ' · ' + Math.round(pct) + '% real';
+  }
+
+  function stepStage(id, delta){
+    if (currentUserRole !== 'admin') return; // solo el administrador puede editar
+    const stage = stageProgress.find(s => s.id === id);
+    if (!stage) return;
+    stage.pct = Math.max(0, Math.min(100, stage.pct + delta));
+    renderStages();
+    updateSCurve();
+    saveStageProgress();
+  }
+
+  async function saveStageProgress(){
+    const note = document.getElementById('stageSavedNote');
+    if (note) note.textContent = 'Guardando...';
+    try { localStorage.setItem(STAGE_STORAGE_KEY, JSON.stringify(stageProgress)); } catch (e) {}
+    try {
+      const response = await fetch('/api/progress', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stages: stageProgress })
+      });
+      const data = await response.json().catch(() => ({ success:false }));
+      if (note) note.textContent = data.success ? 'Cambios guardados' : 'Guardado localmente (sin conexión al servidor)';
+    } catch (error) {
+      if (note) note.textContent = 'Guardado localmente (sin conexión al servidor)';
+    }
+  }
+
+  async function loadStageProgress(){
+    try {
+      const response = await fetch('/api/progress');
+      const data = await response.json();
+      if (data && data.success && Array.isArray(data.stages) && data.stages.length) {
+        stageProgress = data.stages.map(s => ({ id:s.id, name:s.name, pct: Math.max(0, Math.min(100, +s.pct || 0)) }));
+        renderStages();
+        updateSCurve();
+        return;
+      }
+    } catch (error) { /* sin backend disponible: usamos respaldo local */ }
+    try {
+      const cached = localStorage.getItem(STAGE_STORAGE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length) stageProgress = parsed;
+      }
+    } catch (error) {}
+    renderStages();
+    updateSCurve();
+  }
+
+  function startStagePolling(){
+    stopStagePolling();
+    // permite que el perfil normal vea, sin recargar, los cambios que hace el administrador
+    stageProgressPoll = setInterval(loadStageProgress, 20000);
+  }
+  function stopStagePolling(){
+    if (stageProgressPoll) clearInterval(stageProgressPoll);
+    stageProgressPoll = null;
+  }
+
+  renderStages();
+  updateSCurve();
+  // ---------- fin avance por etapa + curva S ----------
+
   function setPrivateButtonState(isLoggedIn){
     if (!privateBtn) return;
     privateBtn.textContent = isLoggedIn ? 'Logout' : 'Login';
@@ -948,6 +1070,9 @@
       } else {
         if (usersTable) usersTable.innerHTML = '';
       }
+      renderStages();
+      await loadStageProgress();
+      startStagePolling();
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -968,6 +1093,8 @@
     currentUserRole = 'user';
     setPrivateButtonState(false);
     setAdminPanelVisibility();
+    renderStages();
+    stopStagePolling();
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
   }
