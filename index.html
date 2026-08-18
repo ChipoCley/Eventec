@@ -327,9 +327,31 @@
   .doclist .drow span:first-child{color:var(--paper);}
   .doclist .drow span:last-child{font-family:'IBM Plex Mono'; font-size:11px; color:var(--mint);}
 
-  .provtable .prow{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:10px; padding:11px 0; border-bottom:1px solid rgba(196,163,74,.15); font-size:12.5px;}
+  .provtable .prow{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:10px; padding:11px 0; border-bottom:1px solid rgba(196,163,74,.15); font-size:12.5px; align-items:center;}
   .provtable .prow.head{color:rgba(196,163,74,.55); font-family:'IBM Plex Mono'; font-size:10.5px; text-transform:uppercase;}
   .provtable .prow span:first-child{color:var(--paper);}
+  .provtable.editable .prow{grid-template-columns:1.4fr 1fr 1fr auto;}
+  .provtable .prow-actions{display:flex; gap:6px; justify-content:flex-end;}
+  .provtable .prow-actions button{
+    font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase;
+    padding:5px 9px; border-radius:3px; border:1px solid rgba(196,163,74,.35); background:none; color:var(--mint); cursor:pointer; transition:.2s ease;
+  }
+  .provtable .prow-actions button:hover{background:rgba(196,163,74,.16);}
+  .provtable .prow-actions button.pdel{border-color:rgba(200,90,90,.4); color:#d98a8a;}
+  .provtable .prow-actions button.pdel:hover{background:rgba(200,90,90,.14);}
+  .prov-admin-form{display:none; grid-template-columns:1.4fr 1fr 1fr auto; gap:10px; padding:14px 0 6px; margin-top:6px; border-top:1px solid rgba(196,163,74,.15); align-items:center;}
+  .prov-admin-form.show{display:grid;}
+  .prov-admin-form input{
+    font:inherit; font-size:12.5px; padding:8px 10px; border-radius:6px; border:1px solid rgba(196,163,74,.25);
+    background:rgba(255,255,255,.05); color:var(--paper);
+  }
+  .prov-admin-form button{
+    font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+    padding:9px 14px; border-radius:5px; border:1px solid var(--brass); background:var(--brass); color:var(--ink); cursor:pointer;
+  }
+  .prov-admin-note{display:none; font-family:'IBM Plex Mono'; font-size:10.5px; color:rgba(196,163,74,.55); margin-top:10px;}
+  .prov-admin-note.show{display:block;}
+  @media (max-width:900px){ .provtable.editable .prow{grid-template-columns:1fr;} .prow-actions{justify-content:flex-start; margin-top:6px;} .prov-admin-form{grid-template-columns:1fr;} }
 
   .findash{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(196,163,74,.18); border:1px solid rgba(196,163,74,.18);}
   .fincard{background:var(--green-2); padding:24px;}
@@ -784,12 +806,16 @@
     <div class="dgrid">
       <div class="dcard" style="grid-column:1/-1;">
         <h4>Proveedores y certificaciones</h4>
-        <div class="provtable">
+        <div class="provtable" id="provTable">
           <div class="prow head"><span>Proveedor</span><span>Alcance</span><span>Certificación</span></div>
-          <div class="prow"><span>Proveedor de concreto</span><span>Concreto premezclado</span><span>NMX / ISO 9001</span></div>
-          <div class="prow"><span>Proveedor de acero</span><span>Estructura</span><span>ISO 9001</span></div>
-          <div class="prow"><span>Proveedor de elevadores</span><span>Elevadores torre</span><span>Norma NOM</span></div>
         </div>
+        <form class="prov-admin-form" id="provAdminForm" autocomplete="off">
+          <input type="text" id="provNameInput" placeholder="Proveedor" required>
+          <input type="text" id="provScopeInput" placeholder="Alcance" required>
+          <input type="text" id="provCertInput" placeholder="Certificación" required>
+          <button type="submit" id="provSubmitBtn">Añadir</button>
+        </form>
+        <div class="prov-admin-note" id="provAdminNote">Solo los administradores pueden editar esta tabla.</div>
       </div>
     </div>
 
@@ -986,6 +1012,118 @@
   updateSCurve();
   // ---------- fin avance por etapa + curva S ----------
 
+  // ---------- proveedores y certificaciones (editable solo por admin, sin backend) ----------
+  const PROV_STORAGE_KEY = 'torreA_providers';
+  let providers = [
+    { id:'p1', name:'Proveedor de concreto',   scope:'Concreto premezclado', cert:'NMX / ISO 9001' },
+    { id:'p2', name:'Proveedor de acero',       scope:'Estructura',           cert:'ISO 9001' },
+    { id:'p3', name:'Proveedor de elevadores',  scope:'Elevadores torre',     cert:'Norma NOM' }
+  ];
+  let editingProviderId = null;
+
+  const provTable = document.getElementById('provTable');
+  const provAdminForm = document.getElementById('provAdminForm');
+  const provNameInput = document.getElementById('provNameInput');
+  const provScopeInput = document.getElementById('provScopeInput');
+  const provCertInput = document.getElementById('provCertInput');
+  const provSubmitBtn = document.getElementById('provSubmitBtn');
+  const provAdminNote = document.getElementById('provAdminNote');
+
+  function loadProviders(){
+    try {
+      const cached = localStorage.getItem(PROV_STORAGE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) providers = parsed;
+      }
+    } catch (error) {}
+  }
+
+  function saveProviders(){
+    try { localStorage.setItem(PROV_STORAGE_KEY, JSON.stringify(providers)); } catch (error) {}
+  }
+
+  function escapeProvText(value){
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function renderProviders(){
+    if (!provTable) return;
+    const isAdmin = currentUserRole === 'admin';
+    provTable.classList.toggle('editable', isAdmin);
+
+    const rows = providers.map(p => `
+      <div class="prow" data-provider-id="${p.id}">
+        <span>${escapeProvText(p.name)}</span>
+        <span>${escapeProvText(p.scope)}</span>
+        <span>${escapeProvText(p.cert)}</span>
+        ${isAdmin ? `
+          <div class="prow-actions">
+            <button type="button" class="pedit" onclick="editProvider('${p.id}')">Editar</button>
+            <button type="button" class="pdel" onclick="deleteProvider('${p.id}')">Eliminar</button>
+          </div>` : ''}
+      </div>
+    `).join('');
+
+    provTable.innerHTML = `<div class="prow head"><span>Proveedor</span><span>Alcance</span><span>Certificación</span></div>${rows}`;
+
+    if (provAdminForm) provAdminForm.classList.toggle('show', isAdmin);
+    if (provAdminNote) provAdminNote.classList.toggle('show', !isAdmin);
+    if (!isAdmin) cancelProviderEdit();
+  }
+
+  function editProvider(id){
+    if (currentUserRole !== 'admin') return; // solo el administrador puede editar
+    const provider = providers.find(p => p.id === id);
+    if (!provider) return;
+    editingProviderId = id;
+    if (provNameInput) provNameInput.value = provider.name;
+    if (provScopeInput) provScopeInput.value = provider.scope;
+    if (provCertInput) provCertInput.value = provider.cert;
+    if (provSubmitBtn) provSubmitBtn.textContent = 'Guardar cambios';
+    if (provNameInput) provNameInput.focus();
+  }
+
+  function cancelProviderEdit(){
+    editingProviderId = null;
+    if (provAdminForm) provAdminForm.reset();
+    if (provSubmitBtn) provSubmitBtn.textContent = 'Añadir';
+  }
+
+  function deleteProvider(id){
+    if (currentUserRole !== 'admin') return; // solo el administrador puede eliminar
+    providers = providers.filter(p => p.id !== id);
+    if (editingProviderId === id) cancelProviderEdit();
+    saveProviders();
+    renderProviders();
+  }
+
+  function handleProviderSubmit(event){
+    event.preventDefault();
+    if (currentUserRole !== 'admin') return; // solo el administrador puede editar
+    const name = provNameInput ? provNameInput.value.trim() : '';
+    const scope = provScopeInput ? provScopeInput.value.trim() : '';
+    const cert = provCertInput ? provCertInput.value.trim() : '';
+    if (!name || !scope || !cert) return;
+
+    if (editingProviderId) {
+      const provider = providers.find(p => p.id === editingProviderId);
+      if (provider) { provider.name = name; provider.scope = scope; provider.cert = cert; }
+    } else {
+      providers.push({ id: 'p' + Date.now(), name, scope, cert });
+    }
+    saveProviders();
+    cancelProviderEdit();
+    renderProviders();
+  }
+
+  if (provAdminForm) provAdminForm.addEventListener('submit', handleProviderSubmit);
+
+  loadProviders();
+  renderProviders();
+  // ---------- fin proveedores y certificaciones ----------
+
   function setPrivateButtonState(isLoggedIn){
     if (!privateBtn) return;
     privateBtn.textContent = isLoggedIn ? 'Logout' : 'Login';
@@ -1065,6 +1203,7 @@
       dash.classList.add('show');
       setPrivateButtonState(true);
       setAdminPanelVisibility();
+      renderProviders();
       if (currentUserRole === 'admin') {
         await loadUsers();
       } else {
@@ -1094,6 +1233,7 @@
     setPrivateButtonState(false);
     setAdminPanelVisibility();
     renderStages();
+    renderProviders();
     stopStagePolling();
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
