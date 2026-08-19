@@ -6,7 +6,7 @@ if (year) {
 const contactForm = document.getElementById('contactForm');
 const contactSuccess = document.getElementById('contactSuccess');
 const contactSuccessClose = document.getElementById('contactSuccessClose');
-const whatsappNumber = '523315204086';
+const whatsappNumber = '';
 
 function showContactSuccessModal() {
   if (contactSuccess) {
