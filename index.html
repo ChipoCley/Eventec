@@ -386,43 +386,6 @@
   filter: drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6)) drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
 }
 /* Estilos para el texto destacado superior en Análisis del Concepto */
-.concepto-intro-box {
-  background: rgba(16, 20, 31, 0.65);
-  border: 1px solid rgba(217, 180, 76, 0.3);
-  border-radius: 4px;
-  padding: 40px;
-  margin-bottom: 40px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.concepto-title-main {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(22px, 2.5vw, 32px);
-  color: var(--paper);
-  margin-bottom: 20px;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.concepto-p-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #D1C9B8;
-  margin-bottom: 18px;
-}
-
-.concepto-callout-grid {
-  margin-top: 28px;
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(6, 9, 16, 0.9) 0%, rgba(16, 20, 31, 0.9) 100%);
-  border-left: 3px solid var(--brass);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .concepto-callout-item {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
@@ -441,37 +404,34 @@
   color: var(--brass);
 }
 
-/* BOTÓN COMPRA EN TORRE A */
+/* COMPRA EN TORRE A */
 .concepto-callout-item.highlight {
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--brass);
-  border: 1px solid var(--brass);
-  padding: 16px 24px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   margin-top: 10px;
-  width: fit-content;
-  min-width: 240px;
-  justify-content: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 20%,
+    #fff1a8 38%,
+    #b8860b 55%,
+    #f3d46a 72%,
+    #9a7225 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.18);
 }
 
-/* Quitamos el diamante del botón */
+/* Diamante del texto destacado */
 .concepto-callout-item.highlight::before {
-  content: "";
-}
-
-/* Efecto al pasar el mouse */
-.concepto-callout-item.highlight:hover {
-  background: var(--paper);
-  color: var(--ink);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  color: #d4af37;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
 }
 </style>
 </head>
@@ -574,11 +534,10 @@
           COMPRA PLUSVALÍA.
         </div>
 
-        <a href="#compra" class="concepto-callout-item highlight">
-  COMPRA EN TORRE A
-  <span>→</span>
-</a>
-      </div>
+        <div class="concepto-callout-item highlight">
+          COMPRA EN TORRE A.
+        </div>
+        </div>
 
     </div>
 
