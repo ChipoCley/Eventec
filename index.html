@@ -359,6 +359,30 @@
   .fincard .fval{font-family:'Archivo'; font-weight:900; color:var(--paper); font-size:26px; margin-top:8px;}
 
   @media (max-width:900px){ .dgrid{grid-template-columns:1fr;} .findash{grid-template-columns:1fr;} .provtable .prow{grid-template-columns:1fr;} }
+  .hero-sub-slogan {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3.2vw, 36px);
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 24px;
+  max-width: 720px;
+  
+  /* Gradiente dorado metálico */
+  background: linear-gradient(135deg, #FFF6D6 0%, #D9B44C 45%, #F0D488 70%, #A9823A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Sombra de brillo inicial */
+  filter: drop-shadow(0 2px 8px rgba(217, 180, 76, 0.25));
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease;
+  cursor: default;
+  display: inline-block;
+}
+
+.hero-sub-slogan:hover {
+  transform: translateY(-3px) scale(1.015);
+  filter: drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6)) drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
+}
 </style>
 </head>
 <body>
@@ -388,7 +412,10 @@
   <div id="heroOverlay"></div>
   <div class="hero-top">
     <div class="eyebrow">Zapopan, Jalisco</div>
-    <p class="hero-sub">Vive donde todo está cerca. Invierte donde todo está creciendo.</p>
+    <p class="hero-sub-slogan">
+  Vive donde todo está cerca.<br>
+  Invierte donde todo está creciendo.
+</p>
   </div>
   <div class="hero-cta">
     <a href="#contacto" class="btn btn-solid">Quiero información</a>
