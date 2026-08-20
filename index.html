@@ -455,40 +455,57 @@
   color: #d4af37;
   text-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
 }
-
 /* =========================================================
-   DISEÑO — SECCIÓN CONCEPTO / TORRE A
-   PALETA DORADA
+   TORRE A — PALETA DORADA METÁLICA
    ========================================================= */
 
 :root {
-  --concepto-gold: #D9B44C;
-  --concepto-gold-light: #FBEFC4;
-  --concepto-text: rgba(255, 255, 255, 0.48);
-  --concepto-text-soft: rgba(255, 255, 255, 0.58);
+  --gold-dark: #8f6b24;
+  --gold: #d4af37;
+  --gold-light: #fff1a8;
+  --gold-deep: #b8860b;
+  --gold-bright: #f3d46a;
+  --gold-shadow: #9a7225;
+
+  --text-soft: rgba(255, 255, 255, 0.48);
+  --text-muted: rgba(255, 255, 255, 0.58);
 }
 
 
 /* =========================================================
-   ENCABEZADO PRINCIPAL
+   ENCABEZADO
    ========================================================= */
 
 #concepto .section-head h2 {
-  color: var(--concepto-gold);
   font-weight: 800;
-  letter-spacing: -0.5px;
   line-height: 1.05;
+  letter-spacing: -0.5px;
 
-  text-shadow:
-    0 4px 20px rgba(217, 180, 76, 0.35),
-    0 0 30px rgba(251, 239, 196, 0.18);
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 20%,
+    #fff1a8 38%,
+    #b8860b 55%,
+    #f3d46a 72%,
+    #9a7225 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.35))
+    drop-shadow(0 0 30px rgba(255, 241, 168, 0.18));
 }
 
 
-/* Texto pequeño superior */
+/* Texto pequeño "Análisis del Concepto" */
 
 #concepto .section-head .eyebrow {
-  color: rgba(217, 180, 76, 0.75);
+  color: var(--gold);
+
   font-weight: 600;
   letter-spacing: 2px;
 }
@@ -497,27 +514,40 @@
 /* Descripción del encabezado */
 
 #concepto .section-head > p {
-  color: var(--concepto-text);
+  color: var(--text-soft);
   line-height: 1.8;
 }
 
 
 /* =========================================================
    FRASE PRINCIPAL
+   "Una inversión que se disfruta todos los días."
    ========================================================= */
 
 #concepto .concepto-intro-box > h3 {
-  color: var(--concepto-gold-light);
-
   font-size: clamp(28px, 4vw, 46px);
 
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.5px;
 
-  text-shadow:
-    0 4px 20px rgba(217, 180, 76, 0.6),
-    0 0 30px rgba(251, 239, 196, 0.4);
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 20%,
+    #fff1a8 38%,
+    #b8860b 55%,
+    #f3d46a 72%,
+    #9a7225 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.6))
+    drop-shadow(0 0 30px rgba(255, 241, 168, 0.4));
 }
 
 
@@ -526,7 +556,7 @@
    ========================================================= */
 
 #concepto .concepto-callout-item {
-  color: var(--concepto-gold-light);
+  color: var(--gold-light);
 
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -536,19 +566,20 @@
 /* Viñetas */
 
 #concepto .concepto-callout-item::before {
-  color: var(--concepto-gold);
+  color: var(--gold);
 
   text-shadow:
-    0 0 10px rgba(217, 180, 76, 0.6);
+    0 0 10px rgba(212, 175, 55, 0.6);
 }
 
 
 /* =========================================================
-   TEXTO LARGO — TORRE A NACE...
+   TEXTO LARGO
+   "TORRE A nace bajo un concepto..."
    ========================================================= */
 
 #concepto .concepto-intro-box > .vol {
-  color: var(--concepto-text);
+  color: var(--text-soft);
 
   font-size: 16px;
   font-weight: 400;
@@ -559,11 +590,11 @@
 
 
 /* =========================================================
-   TEXTO TORRE A REÚNE...
+   SEGUNDO TEXTO
    ========================================================= */
 
 #concepto .concepto-p-desc {
-  color: var(--concepto-text-soft);
+  color: var(--text-muted);
 
   font-size: 17px;
   font-weight: 400;
@@ -572,14 +603,24 @@
 }
 
 
-/* TORRE A destacado dentro del párrafo */
+/* TORRE A dentro del párrafo */
 
 #concepto .concepto-p-desc strong {
-  color: var(--concepto-gold);
-  font-weight: 800;
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 25%,
+    #fff1a8 45%,
+    #b8860b 65%,
+    #f3d46a 85%,
+    #9a7225 100%
+  );
 
-  text-shadow:
-    0 0 12px rgba(217, 180, 76, 0.35);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-weight: 800;
 }
 
 
@@ -588,19 +629,33 @@
    ========================================================= */
 
 #concepto .concepto-callout-item.highlight {
-  color: var(--concepto-gold-light);
+  display: block;
+
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 20%,
+    #fff1a8 38%,
+    #b8860b 55%,
+    #f3d46a 72%,
+    #9a7225 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   font-weight: 800;
   letter-spacing: 2px;
 
-  background: transparent;
+  background-color: transparent;
   border: none;
   box-shadow: none;
   padding: 0;
 
-  text-shadow:
-    0 4px 20px rgba(217, 180, 76, 0.6),
-    0 0 30px rgba(251, 239, 196, 0.4);
+  filter:
+    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.6))
+    drop-shadow(0 0 30px rgba(255, 241, 168, 0.4));
 }
 
 
@@ -609,34 +664,46 @@
    ========================================================= */
 
 
-/* Etiquetas */
+/* Volumen frontal / Volumen principal */
 
 #concepto .vol-grid .tag {
-  color: rgba(217, 180, 76, 0.75);
+  color: var(--gold);
 
   font-weight: 600;
   letter-spacing: 1.5px;
 }
 
 
-/* Títulos */
+/* Títulos de los volúmenes */
 
 #concepto .vol-grid h3 {
-  color: var(--concepto-gold-light);
-
   font-weight: 800;
   line-height: 1.15;
 
-  text-shadow:
-    0 4px 20px rgba(217, 180, 76, 0.45),
-    0 0 30px rgba(251, 239, 196, 0.25);
+  background: linear-gradient(
+    120deg,
+    #8f6b24 0%,
+    #d4af37 20%,
+    #fff1a8 38%,
+    #b8860b 55%,
+    #f3d46a 72%,
+    #9a7225 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 4px 18px rgba(212, 175, 55, 0.45))
+    drop-shadow(0 0 25px rgba(255, 241, 168, 0.22));
 }
 
 
-/* Párrafos */
+/* Textos descriptivos */
 
 #concepto .vol-grid p {
-  color: var(--concepto-text);
+  color: var(--text-soft);
 
   font-weight: 400;
   line-height: 1.8;
