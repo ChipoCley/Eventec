@@ -360,106 +360,12 @@
 
   @media (max-width:900px){ .dgrid{grid-template-columns:1fr;} .findash{grid-template-columns:1fr;} .provtable .prow{grid-template-columns:1fr;} }
   
- /* Slogan Dorado Metalico */
-  .hero-sub-slogan {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(26px, 4vw, 44px);
-  font-weight: 600;
-  line-height: 1.35;
-  margin-top: 24px;
-  max-width: 720px;
-  
-  /* Gradiente dorado metálico */
-  background: linear-gradient(135deg, #FFF6D6 0%, #FFF6D6 45%, #FFF6D6 70%, #FFF6D6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  
-  /* Sombra de brillo inicial */
-  filter: drop-shadow(0 2px 8px rgba(217, 180, 76, 0.25));
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease;
-  cursor: default;
-  display: inline-block;
-}
-
-.hero-sub-slogan:hover {
-  transform: translateY(-3px) scale(1.015);
-  filter: drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6)) drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
-}
-/* Estilos para el texto destacado superior en Análisis del Concepto */
-.concepto-callout-item {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--paper);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.concepto-callout-item::before {
-  content: "◆";
-  font-size: 10px;
-  color: var(--brass);
-}
-
-/* COMPRA EN TORRE A */
-.concepto-callout-item.highlight {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  margin-top: 10px;
-
-  background: linear-gradient(
-    120deg,
-    #8f6b24 0%,
-    #d4af37 20%,
-    #fff1a8 38%,
-    #b8860b 55%,
-    #f3d46a 72%,
-    #9a7225 100%
-  );
-}
-.concepto-callout {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px 40px;
-  width: 100%;
-  max-width: 900px;
-  margin: 30px auto 20px;
-}
-
-.concepto-callout-item {
-  text-align: center;
-  white-space: nowrap;
-  font-size: 14px;
-}
-
-.concepto-callout-item.highlight {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-
-  color: #D4AF37;
-  font-weight: 700;
-  letter-spacing: 2px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-/* Diamante del texto destacado */
-.concepto-callout-item.highlight::before {
-  color: #d4af37;
-  text-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
-}
 /* =========================================================
-   TORRE A — PALETA DORADA METÁLICA
+   PALETA TORRE A — DORADO METÁLICO
    ========================================================= */
 
 :root {
+  /* Oro metálico */
   --gold-dark: #8f6b24;
   --gold: #d4af37;
   --gold-light: #fff1a8;
@@ -467,21 +373,13 @@
   --gold-bright: #f3d46a;
   --gold-shadow: #9a7225;
 
-  --text-soft: rgba(255, 255, 255, 0.48);
-  --text-muted: rgba(255, 255, 255, 0.58);
-}
+  /* Textos */
+  --text-main: rgba(255, 255, 255, 0.78);
+  --text-soft: rgba(255, 255, 255, 0.52);
+  --text-muted: rgba(255, 255, 255, 0.42);
 
-
-/* =========================================================
-   ENCABEZADO
-   ========================================================= */
-
-#concepto .section-head h2 {
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.5px;
-
-  background: linear-gradient(
+  /* Gradiente metálico */
+  --gold-gradient: linear-gradient(
     120deg,
     #8f6b24 0%,
     #d4af37 20%,
@@ -490,18 +388,70 @@
     #f3d46a 72%,
     #9a7225 100%
   );
+}
+
+
+/* =========================================================
+   SLOGAN PRINCIPAL
+   ========================================================= */
+
+.hero-sub-slogan {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 24px;
+  max-width: 720px;
+
+  background: var(--gold-gradient);
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
   filter:
-    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.35))
-    drop-shadow(0 0 30px rgba(255, 241, 168, 0.18));
+    drop-shadow(0 2px 8px rgba(212, 175, 55, 0.30));
+
+  transition:
+    transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    filter 0.4s ease;
+
+  cursor: default;
+  display: inline-block;
 }
 
 
-/* Texto pequeño "Análisis del Concepto" */
+.hero-sub-slogan:hover {
+  transform: translateY(-3px) scale(1.015);
+
+  filter:
+    drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6))
+    drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
+}
+
+
+/* =========================================================
+   SECCIÓN CONCEPTO — ENCABEZADO
+   ========================================================= */
+
+#concepto .section-head h2 {
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+
+  background: var(--gold-gradient);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 4px 18px rgba(212, 175, 55, 0.35))
+    drop-shadow(0 0 25px rgba(255, 241, 168, 0.18));
+}
+
+
+/* "Análisis del Concepto" */
 
 #concepto .section-head .eyebrow {
   color: var(--gold);
@@ -515,13 +465,13 @@
 
 #concepto .section-head > p {
   color: var(--text-soft);
+
   line-height: 1.8;
 }
 
 
 /* =========================================================
-   FRASE PRINCIPAL
-   "Una inversión que se disfruta todos los días."
+   TORRE A — FRASE PRINCIPAL
    ========================================================= */
 
 #concepto .concepto-intro-box > h3 {
@@ -531,96 +481,74 @@
   line-height: 1.1;
   letter-spacing: -0.5px;
 
-  background: linear-gradient(
-    120deg,
-    #8f6b24 0%,
-    #d4af37 20%,
-    #fff1a8 38%,
-    #b8860b 55%,
-    #f3d46a 72%,
-    #9a7225 100%
-  );
+  background: var(--gold-gradient);
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
   filter:
-    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.6))
-    drop-shadow(0 0 30px rgba(255, 241, 168, 0.4));
+    drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6))
+    drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
 }
 
 
 /* =========================================================
-   CONCEPTOS
+   CONCEPTOS — 2 x 2
    ========================================================= */
 
-#concepto .concepto-callout-item {
-  color: var(--gold-light);
+.concepto-callout {
+  display: grid;
 
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px 40px;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin: 30px auto 20px;
 }
 
 
-/* Viñetas */
+/* Texto */
 
-#concepto .concepto-callout-item::before {
+.concepto-callout-item {
+  font-family: 'IBM Plex Mono', monospace;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  color: var(--text-main);
+
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* Diamante */
+
+.concepto-callout-item::before {
+  content: "◆";
+
+  font-size: 9px;
+
   color: var(--gold);
 
   text-shadow:
-    0 0 10px rgba(212, 175, 55, 0.6);
-}
-
-
-/* =========================================================
-   TEXTO LARGO
-   "TORRE A nace bajo un concepto..."
-   ========================================================= */
-
-#concepto .concepto-intro-box > .vol {
-  color: var(--text-soft);
-
-  font-size: 16px;
-  font-weight: 400;
-
-  line-height: 1.85;
-  letter-spacing: 0.15px;
-}
-
-
-/* =========================================================
-   SEGUNDO TEXTO
-   ========================================================= */
-
-#concepto .concepto-p-desc {
-  color: var(--text-muted);
-
-  font-size: 17px;
-  font-weight: 400;
-
-  line-height: 1.75;
-}
-
-
-/* TORRE A dentro del párrafo */
-
-#concepto .concepto-p-desc strong {
-  background: linear-gradient(
-    120deg,
-    #8f6b24 0%,
-    #d4af37 25%,
-    #fff1a8 45%,
-    #b8860b 65%,
-    #f3d46a 85%,
-    #9a7225 100%
-  );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-weight: 800;
+    0 0 8px rgba(212, 175, 55, 0.45);
 }
 
 
@@ -628,67 +556,113 @@
    COMPRA EN TORRE A
    ========================================================= */
 
-#concepto .concepto-callout-item.highlight {
+.concepto-callout-item.highlight {
   display: block;
 
-  background: linear-gradient(
-    120deg,
-    #8f6b24 0%,
-    #d4af37 20%,
-    #fff1a8 38%,
-    #b8860b 55%,
-    #f3d46a 72%,
-    #9a7225 100%
-  );
+  margin-top: 20px;
+
+  padding: 0;
+
+  background: var(--gold-gradient);
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  font-weight: 800;
-  letter-spacing: 2px;
+  font-family: 'IBM Plex Mono', monospace;
 
-  background-color: transparent;
+  font-size: 17px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-align: center;
+
   border: none;
+  border-radius: 0;
   box-shadow: none;
-  padding: 0;
 
   filter:
-    drop-shadow(0 4px 20px rgba(212, 175, 55, 0.6))
-    drop-shadow(0 0 30px rgba(255, 241, 168, 0.4));
+    drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6))
+    drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
+}
+
+
+/* Quitar diamante de COMPRA EN TORRE A */
+
+.concepto-callout-item.highlight::before {
+  content: none;
 }
 
 
 /* =========================================================
-   DOS VOLÚMENES
+   TEXTO LARGO — TORRE A NACE...
    ========================================================= */
 
+#concepto .concepto-intro-box > .vol {
+  color: var(--text-soft);
 
-/* Volumen frontal / Volumen principal */
+  font-size: 16px;
+
+  font-weight: 400;
+
+  line-height: 1.85;
+
+  letter-spacing: 0.15px;
+}
+
+
+/* =========================================================
+   TEXTO SECUNDARIO
+   ========================================================= */
+
+#concepto .concepto-p-desc {
+  color: var(--text-muted);
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  line-height: 1.75;
+}
+
+
+/* TORRE A dentro del texto secundario */
+
+#concepto .concepto-p-desc strong {
+  color: var(--gold);
+
+  font-weight: 800;
+
+  text-shadow:
+    0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+
+/* =========================================================
+   DOS VOLÚMENES — ETIQUETAS
+   ========================================================= */
 
 #concepto .vol-grid .tag {
   color: var(--gold);
 
   font-weight: 600;
+
   letter-spacing: 1.5px;
 }
 
 
-/* Títulos de los volúmenes */
+/* =========================================================
+   DOS VOLÚMENES — TÍTULOS
+   ========================================================= */
 
 #concepto .vol-grid h3 {
   font-weight: 800;
+
   line-height: 1.15;
 
-  background: linear-gradient(
-    120deg,
-    #8f6b24 0%,
-    #d4af37 20%,
-    #fff1a8 38%,
-    #b8860b 55%,
-    #f3d46a 72%,
-    #9a7225 100%
-  );
+  background: var(--gold-gradient);
 
   -webkit-background-clip: text;
   background-clip: text;
@@ -700,12 +674,15 @@
 }
 
 
-/* Textos descriptivos */
+/* =========================================================
+   DOS VOLÚMENES — PÁRRAFOS
+   ========================================================= */
 
 #concepto .vol-grid p {
   color: var(--text-soft);
 
   font-weight: 400;
+
   line-height: 1.8;
 }
 
@@ -728,6 +705,7 @@
   #concepto .concepto-p-desc,
   #concepto .vol-grid p {
     font-size: 15px;
+
     line-height: 1.7;
   }
 
