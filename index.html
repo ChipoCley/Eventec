@@ -455,6 +455,191 @@
   color: #d4af37;
   text-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
 }
+
+/* =========================================================
+   DISEÑO — SECCIÓN CONCEPTO / TORRE A
+   No modifica la distribución
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   ENCABEZADO PRINCIPAL
+   --------------------------------------------------------- */
+
+#concepto .section-head h2 {
+  color: #D4AF37;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+}
+
+
+/* Pequeño título superior */
+
+#concepto .section-head .eyebrow {
+  color: rgba(212, 175, 55, 0.75);
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+
+/* Texto descriptivo del encabezado */
+
+#concepto .section-head > p {
+  color: rgba(255, 255, 255, 0.50);
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   TORRE A — FRASE PRINCIPAL
+   ========================================================= */
+
+#concepto .concepto-intro-box > h3 {
+  color: #D4AF37;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+
+/* =========================================================
+   CONCEPTOS
+   NO COMPRES...
+   COMPRA UBICACIÓN...
+   ========================================================= */
+
+#concepto .concepto-callout-item {
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+
+/* Viñetas doradas */
+
+#concepto .concepto-callout-item::before {
+  color: #D4AF37;
+}
+
+
+/* =========================================================
+   TEXTO LARGO — TORRE A NACE...
+   ========================================================= */
+
+#concepto .concepto-intro-box > .vol {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.85;
+  letter-spacing: 0.15px;
+}
+
+
+/* =========================================================
+   TEXTO:
+   TORRE A reúne calidad de vida...
+   ========================================================= */
+
+#concepto .concepto-p-desc {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+
+/* TORRE A dentro de este texto */
+
+#concepto .concepto-p-desc strong {
+  color: #D4AF37;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   COMPRA EN TORRE A
+   ========================================================= */
+
+#concepto .concepto-callout-item.highlight {
+  color: #D4AF37;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+
+/* =========================================================
+   DOS VOLÚMENES
+   ========================================================= */
+
+
+/* Etiquetas */
+
+#concepto .vol-grid .tag {
+  color: rgba(212, 175, 55, 0.75);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+
+/* Títulos de los dos volúmenes */
+
+#concepto .vol-grid h3 {
+  color: #D4AF37;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+
+/* Textos largos de los volúmenes */
+
+#concepto .vol-grid p {
+  color: rgba(255, 255, 255, 0.48);
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   EFECTO SUTIL EN TÍTULOS DORADOS
+   ========================================================= */
+
+#concepto .section-head h2,
+#concepto .concepto-intro-box > h3,
+#concepto .vol-grid h3 {
+  text-shadow:
+    0 0 18px rgba(212, 175, 55, 0.08);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  #concepto .concepto-intro-box > h3 {
+    font-size: 30px;
+  }
+
+  #concepto .vol-grid h3 {
+    font-size: 24px;
+  }
+
+  #concepto .concepto-intro-box > .vol,
+  #concepto .concepto-p-desc,
+  #concepto .vol-grid p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+}
 </style>
 </head>
 <body>
