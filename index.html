@@ -420,22 +420,25 @@
     #f3d46a 72%,
     #9a7225 100%
   );
+}
 .concepto-callout {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 35px;
+  width: 100%;
   flex-wrap: nowrap;
 }
 
 .concepto-callout-item {
   white-space: nowrap;
+  flex-shrink: 0;
 }
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 
-  text-shadow: 0 0 14px rgba(212, 175, 55, 0.18);
+.concepto-callout-item.highlight {
+  display: block;
+  text-align: center;
 }
 
 /* Diamante del texto destacado */
@@ -507,54 +510,53 @@
     </div>
 
     <!-- CONCEPTO TORRE A -->
-    <div class="concepto-intro-box">
+<div class="concepto-intro-box">
 
-      <h3 class="concepto-title-main">
-        Una inversión que se disfruta todos los días.
-      </h3>
+  <h3 class="concepto-title-main">
+    Una inversión que se disfruta todos los días.
+  </h3>
 
-      <p class="concepto-p-desc">
-        <strong>TORRE A</strong> nace bajo un concepto residencial de alto nivel,
-        pensado para quienes entienden que elegir un departamento significa
-        mucho más que elegir dónde vivir. Es seleccionar una ubicación
-        estratégica, tener servicios y puntos de interés a pocos minutos y
-        construir un patrimonio en una zona con potencial de crecimiento y
-        plusvalía.
-      </p>
+  <p class="concepto-p-desc">
+    <strong>TORRE A</strong> nace bajo un concepto residencial de alto nivel,
+    pensado para quienes entienden que elegir un departamento significa
+    mucho más que elegir dónde vivir. Es seleccionar una ubicación
+    estratégica, tener servicios y puntos de interés a pocos minutos y
+    construir un patrimonio en una zona con potencial de crecimiento y
+    plusvalía.
+  </p>
 
-      <p class="concepto-p-desc">
-        <strong>TORRE A</strong> reúne calidad de vida, ubicación y visión de
-        inversión en un mismo lugar.
-      </p>
+  <p class="concepto-p-desc">
+    <strong>TORRE A</strong> reúne calidad de vida, ubicación y visión de
+    inversión en un mismo lugar.
+  </p>
 
-      <div class="concepto-callout">
-<div class="concepto-callout">
+  <!-- CONCEPTOS EN HORIZONTAL -->
+  <div class="concepto-callout">
 
-  <div class="concepto-callout-item">
-    NO COMPRES SOLO UN DEPARTAMENToO.
-  </div>
-
-  <div class="concepto-callout-item">
-    COMPRA UBICACIÓN.
-  </div>
-
-  <div class="concepto-callout-item">
-    COMPRA CALIDAD DE VIDA.
-  </div>
-
-  <div class="concepto-callout-item">
-    COMPRA PLUSVALÍA.
-  </div>
-
-</div>
-
-<div class="concepto-callout-item highlight">
-  COMPRA EN TORRE A.
-</div>
-
-</div>
-
+    <div class="concepto-callout-item">
+      NO COMPRES SOLO UN DEPARTAMENTO.
     </div>
+
+    <div class="concepto-callout-item">
+      COMPRA UBICACIÓN.
+    </div>
+
+    <div class="concepto-callout-item">
+      COMPRA CALIDAD DE VIDA.
+    </div>
+
+    <div class="concepto-callout-item">
+      COMPRA PLUSVALÍA.
+    </div>
+
+  </div>
+
+  <!-- TORRE A EN APARTADO INDEPENDIENTE -->
+  <div class="concepto-callout-item highlight">
+    COMPRA EN TORRE A.
+  </div>
+
+</div>
 
     <!-- DOS VOLÚMENES -->
     <div class="vol-grid">
