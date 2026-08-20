@@ -126,11 +126,13 @@
   #concepto{background:var(--ink); color:var(--paper);}
   #concepto .eyebrow{color:var(--brass);}
   #concepto .section-head p{color:#B7AF9A;}
-  .vol-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.14);}
+  .vol-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; background:none;}
   .vol{background:var(--ink); padding:44px;}
   .vol .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--brass); text-transform:uppercase; letter-spacing:.1em;}
   .vol h3{font-size:26px; margin:14px 0 12px;}
   .vol p{color:#B7AF9A; font-size:14.5px; line-height:1.6;}
+  .vol-grid .vol{background:var(--paper-2); padding:30px; border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
+  .concepto-intro-box{background:var(--paper-2); padding:44px; border:2px solid transparent; border-image:var(--metal-border) 1; box-shadow:var(--glow);}
   @media (max-width:760px){ .vol-grid{grid-template-columns:1fr;} }
 
   /* programa */
@@ -763,7 +765,7 @@
     <!-- ENCABEZADO -->
     <div class="section-head">
       <div>
-        <div class="vol">Análisis del Concepto</div>
+        <div class="eyebrow">Análisis del Concepto</div>
         <h2>Dos volúmenes,<br>un solo proyecto</h2>
       </div>
 
@@ -774,7 +776,7 @@
     </div>
 
     <!-- CONCEPTO TORRE A -->
-<div class="vol">
+<div class="concepto-intro-box">
 
   <h3>Una inversión que se disfruta todos los días.</h3>
 <!-- CONCEPTOS EN HORIZONTAL -->
