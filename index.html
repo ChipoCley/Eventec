@@ -428,23 +428,50 @@
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--brass);
+  color: var(--paper);
   text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.concepto-callout-item.highlight {
-  font-size: 16px;
-  color: var(--paper);
-  margin-top: 6px;
-}
-
 .concepto-callout-item::before {
   content: "◆";
   font-size: 10px;
-  color: var(--brass-dim);
+  color: var(--brass);
+}
+
+/* BOTÓN COMPRA EN TORRE A */
+.concepto-callout-item.highlight {
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--brass);
+  border: 1px solid var(--brass);
+  padding: 16px 24px;
+  margin-top: 10px;
+  width: fit-content;
+  min-width: 240px;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Quitamos el diamante del botón */
+.concepto-callout-item.highlight::before {
+  content: "";
+}
+
+/* Efecto al pasar el mouse */
+.concepto-callout-item.highlight:hover {
+  background: var(--paper);
+  color: var(--ink);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 </style>
 </head>
