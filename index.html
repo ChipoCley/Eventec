@@ -512,14 +512,32 @@
   text-transform: uppercase;
 
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
 
   gap: 10px;
 
-  text-align: left;
+  text-align: center;
 
   white-space: nowrap;
+}
+
+
+@media (max-width: 760px) {
+  .concepto-callout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .concepto-callout-item {
+    white-space: normal;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .concepto-callout-item::before {
+    flex-shrink: 0;
+  }
 }
 
 
@@ -751,6 +769,11 @@
         <div class="eyebrow">Análisis del Concepto</div>
         <h2>Dos volúmenes,<br>un solo proyecto</h2>
       </div>
+
+      <p>
+        El conjunto integra áreas verdes, terrazas y espacios comunes que
+        promueven la convivencia y la conexión con el entorno urbano.
+      </p>
     </div>
 
     <!-- CONCEPTO TORRE A -->
@@ -787,7 +810,7 @@
   </div>
 
   <p class="concepto-p-desc">
-    TORRE A reúne calidad de vida, ubicación y visión de
+    <strong>TORRE A</strong> reúne calidad de vida, ubicación y visión de
     inversión en un mismo lugar.
   </p>
 
@@ -806,9 +829,9 @@
       <div class="vol">
         <div class="tag">Volumen frontal</div>
 
-        <h2>
+        <h3>
           Plataforma comercial y de amenidades
-        </h2>
+        </h3>
 
         <p>
           Ubicado en la parte baja del edificio, conectado directamente con
@@ -820,9 +843,9 @@
       <div class="vol">
         <div class="tag">Volumen principal</div>
 
-        <h2>
+        <h3>
           Torre de departamentos
-        </h2>
+        </h3>
 
         <p>
           Se desplanta en la parte trasera del predio y se eleva para contener
