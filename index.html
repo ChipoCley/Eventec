@@ -422,23 +422,24 @@
   );
 }
 .concepto-callout {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 35px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 40px;
   width: 100%;
-  flex-wrap: nowrap;
+  max-width: 900px;
+  margin: 30px auto 20px;
 }
 
 .concepto-callout-item {
+  text-align: center;
   white-space: nowrap;
-  flex-shrink: 0;
+  font-size: 14px;
 }
 
 .concepto-callout-item.highlight {
   display: block;
   text-align: center;
+  margin-top: 20px;
 }
 
 /* Diamante del texto destacado */
