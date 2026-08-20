@@ -458,69 +458,88 @@
 
 /* =========================================================
    DISEÑO — SECCIÓN CONCEPTO / TORRE A
-   No modifica la distribución
+   PALETA DORADA
    ========================================================= */
 
-
-/* ---------------------------------------------------------
-   ENCABEZADO PRINCIPAL
-   --------------------------------------------------------- */
-
-#concepto .section-head h2 {
-  color: #D4AF37;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1.05;
+:root {
+  --concepto-gold: #D9B44C;
+  --concepto-gold-light: #FBEFC4;
+  --concepto-text: rgba(255, 255, 255, 0.48);
+  --concepto-text-soft: rgba(255, 255, 255, 0.58);
 }
 
 
-/* Pequeño título superior */
+/* =========================================================
+   ENCABEZADO PRINCIPAL
+   ========================================================= */
+
+#concepto .section-head h2 {
+  color: var(--concepto-gold);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+
+  text-shadow:
+    0 4px 20px rgba(217, 180, 76, 0.35),
+    0 0 30px rgba(251, 239, 196, 0.18);
+}
+
+
+/* Texto pequeño superior */
 
 #concepto .section-head .eyebrow {
-  color: rgba(212, 175, 55, 0.75);
+  color: rgba(217, 180, 76, 0.75);
   font-weight: 600;
   letter-spacing: 2px;
 }
 
 
-/* Texto descriptivo del encabezado */
+/* Descripción del encabezado */
 
 #concepto .section-head > p {
-  color: rgba(255, 255, 255, 0.50);
+  color: var(--concepto-text);
   line-height: 1.8;
 }
 
 
 /* =========================================================
-   TORRE A — FRASE PRINCIPAL
+   FRASE PRINCIPAL
    ========================================================= */
 
 #concepto .concepto-intro-box > h3 {
-  color: #D4AF37;
+  color: var(--concepto-gold-light);
+
   font-size: clamp(28px, 4vw, 46px);
+
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.5px;
+
+  text-shadow:
+    0 4px 20px rgba(217, 180, 76, 0.6),
+    0 0 30px rgba(251, 239, 196, 0.4);
 }
 
 
 /* =========================================================
    CONCEPTOS
-   NO COMPRES...
-   COMPRA UBICACIÓN...
    ========================================================= */
 
 #concepto .concepto-callout-item {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--concepto-gold-light);
+
   font-weight: 700;
   letter-spacing: 1.5px;
 }
 
 
-/* Viñetas doradas */
+/* Viñetas */
 
 #concepto .concepto-callout-item::before {
-  color: #D4AF37;
+  color: var(--concepto-gold);
+
+  text-shadow:
+    0 0 10px rgba(217, 180, 76, 0.6);
 }
 
 
@@ -529,32 +548,38 @@
    ========================================================= */
 
 #concepto .concepto-intro-box > .vol {
-  color: rgba(255, 255, 255, 0.48);
+  color: var(--concepto-text);
+
   font-size: 16px;
   font-weight: 400;
+
   line-height: 1.85;
   letter-spacing: 0.15px;
 }
 
 
 /* =========================================================
-   TEXTO:
-   TORRE A reúne calidad de vida...
+   TEXTO TORRE A REÚNE...
    ========================================================= */
 
 #concepto .concepto-p-desc {
-  color: rgba(255, 255, 255, 0.58);
+  color: var(--concepto-text-soft);
+
   font-size: 17px;
   font-weight: 400;
+
   line-height: 1.75;
 }
 
 
-/* TORRE A dentro de este texto */
+/* TORRE A destacado dentro del párrafo */
 
 #concepto .concepto-p-desc strong {
-  color: #D4AF37;
+  color: var(--concepto-gold);
   font-weight: 800;
+
+  text-shadow:
+    0 0 12px rgba(217, 180, 76, 0.35);
 }
 
 
@@ -563,7 +588,8 @@
    ========================================================= */
 
 #concepto .concepto-callout-item.highlight {
-  color: #D4AF37;
+  color: var(--concepto-gold-light);
+
   font-weight: 800;
   letter-spacing: 2px;
 
@@ -571,6 +597,10 @@
   border: none;
   box-shadow: none;
   padding: 0;
+
+  text-shadow:
+    0 4px 20px rgba(217, 180, 76, 0.6),
+    0 0 30px rgba(251, 239, 196, 0.4);
 }
 
 
@@ -582,39 +612,34 @@
 /* Etiquetas */
 
 #concepto .vol-grid .tag {
-  color: rgba(212, 175, 55, 0.75);
+  color: rgba(217, 180, 76, 0.75);
+
   font-weight: 600;
   letter-spacing: 1.5px;
 }
 
 
-/* Títulos de los dos volúmenes */
+/* Títulos */
 
 #concepto .vol-grid h3 {
-  color: #D4AF37;
+  color: var(--concepto-gold-light);
+
   font-weight: 800;
   line-height: 1.15;
+
+  text-shadow:
+    0 4px 20px rgba(217, 180, 76, 0.45),
+    0 0 30px rgba(251, 239, 196, 0.25);
 }
 
 
-/* Textos largos de los volúmenes */
+/* Párrafos */
 
 #concepto .vol-grid p {
-  color: rgba(255, 255, 255, 0.48);
+  color: var(--concepto-text);
+
   font-weight: 400;
   line-height: 1.8;
-}
-
-
-/* =========================================================
-   EFECTO SUTIL EN TÍTULOS DORADOS
-   ========================================================= */
-
-#concepto .section-head h2,
-#concepto .concepto-intro-box > h3,
-#concepto .vol-grid h3 {
-  text-shadow:
-    0 0 18px rgba(212, 175, 55, 0.08);
 }
 
 
