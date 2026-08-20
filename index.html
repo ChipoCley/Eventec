@@ -409,18 +409,12 @@
   margin-top: 24px;
   max-width: 720px;
 
-  background: var(--gold-gradient);
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  filter:
-    drop-shadow(0 2px 8px rgba(212, 175, 55, 0.30));
+  color: var(--paper);
 
   transition:
     transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-    filter 0.4s ease;
+    filter 0.4s ease,
+    color 0.4s ease;
 
   cursor: default;
   display: inline-block;
@@ -430,8 +424,11 @@
 .hero-sub-slogan:hover {
   transform: translateY(-3px) scale(1.015);
 
+  color: var(--brass);
+
   filter:
     drop-shadow(0 4px 20px rgba(217, 180, 76, 0.6))
+    drop-shadow(0 0 30px rgba(251, 239, 196, 0.4));
 }
 
 
@@ -764,7 +761,7 @@
     <!-- CONCEPTO TORRE A -->
 <div class="concepto-intro-box">
 
-  <h2>Una inversión que se disfruta todos los días.</h2>
+  <h3>Una inversión que se disfruta todos los días.</h3>
 <!-- CONCEPTOS EN HORIZONTAL -->
   <div class="concepto-callout">
 
@@ -795,7 +792,7 @@
   </div>
 
   <p class="concepto-p-desc">
-    TORRE A reúne calidad de vida, ubicación y visión de
+    <strong>TORRE A</strong> reúne calidad de vida, ubicación y visión de
     inversión en un mismo lugar.
   </p>
 
@@ -814,9 +811,9 @@
       <div class="vol">
         <div class="tag">Volumen frontal</div>
 
-        <h4>
+        <h3>
           Plataforma comercial y de amenidades
-        </h4>
+        </h3>
 
         <p>
           Ubicado en la parte baja del edificio, conectado directamente con
@@ -828,9 +825,9 @@
       <div class="vol">
         <div class="tag">Volumen principal</div>
 
-        <h4>
+        <h3>
           Torre de departamentos
-        </h4>
+        </h3>
 
         <p>
           Se desplanta en la parte trasera del predio y se eleva para contener
